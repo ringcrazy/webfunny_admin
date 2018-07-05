@@ -1,7 +1,9 @@
-node_modules
-dist/
-node-debug.log
-assets.json
 .DS_Store
+npm-debug.*
+package-lock.json
+node_modules
+dist
+*.swp
+*.swo
 .idea/
-.idea/workspace.xml
+.vscode/

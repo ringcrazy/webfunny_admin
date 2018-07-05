@@ -3,26 +3,13 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
-const postcssConfig = {
-  loader: 'postcss-loader',
-  options: {
-    plugins: function() {
-      return [
-        autoprefixer({browsers: ['> 1%', 'last 4 versions']}),
-        pxtorem({
-          rootValue: 100,
-          propWhiteList: [],
-        })
-      ]
-    }
-  }
-};
+
 module.exports = {
   module: {
     rules: [
       {
         test: /\.js?$/,
-        exclude: /node_modules/,
+        include: path.resolve(__dirname, 'src/containers'),
         use: [
           {
             loader: 'bundle-loader',
@@ -35,14 +22,6 @@ module.exports = {
         ]
       },
       {
-        test: /\.js?$/,
-        exclude: [
-          /node_modules/,
-          /src\/lib/
-        ],
-        loader: ["eslint-loader"]
-      },
-      {
         test: /\.less$/,
         use: [
           "style-loader",
@@ -53,8 +32,8 @@ module.exports = {
               plugins: () => [
                 autoprefixer({browsers: ['> 1%', 'last 4 versions']}),
                 pxtorem({
-                  rootValue: 100,
-                  propWhiteList: [],
+                    rootValue: 100,
+                    propWhiteList: [],
                 })
               ]
             }
@@ -63,38 +42,17 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              modules: true,
-              sourceMap: true
-            }
-          },
-          postcssConfig,
-        ]
+        test: /\.js?$/,
+        exclude: /node_modules/,
+        loader: ["babel-loader", "eslint-loader"]
       },
       {
-        test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          postcssConfig,
-          {
-            loader: 'sass-loader',
-            options: {
-              sassLoader: {
-                includePaths: [
-                  path.resolve(__dirname, "src/style"),
-                  path.resolve(__dirname, "src/components")
-                ]
-              }
-            }
-          }
+        test: /\.js?$/,
+        exclude: [
+          /node_modules/,
+          /src\/lib/
         ],
+        loader: "eslint-loader"
       },
       {
         test: /\.svg$/,
@@ -111,9 +69,9 @@ module.exports = {
         use: [
           {
             loader: 'url-loader',
-            options: {
-              name:'[path][name].[ext]',
-              limit: 25000
+              options: {
+                name:'[path][name].[ext]',
+                limit: 25000
             }
           }
         ]
@@ -122,6 +80,7 @@ module.exports = {
   },
   resolve: {
     alias: {
+      Libs: path.resolve(__dirname, 'src/lib/'),
       Components: path.resolve(__dirname, 'src/components/'),
       Containers: path.resolve(__dirname, 'src/containers/'),
       Modules: path.resolve(__dirname, 'src/modules/'),

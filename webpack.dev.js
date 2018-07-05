@@ -3,11 +3,23 @@ const webpack = require('webpack');
 const Merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const pxtorem = require('postcss-pxtorem');
 const baseConfig = require('./webpack.base.js');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-
-var port = 3333;
-module.exports = (env) => {
+const postcssConfig = {
+  loader: 'postcss-loader',
+  options: {
+    plugins: () => [
+      autoprefixer({browsers: ['> 1%', 'last 4 versions']}),
+      pxtorem({
+          rootValue: 100,
+          propWhiteList: [],
+      })
+    ]
+  }
+};
+const port = 9010;
+module.exports = env => {
   return Merge(baseConfig, {
     entry: [
       'babel-polyfill',
@@ -31,13 +43,51 @@ module.exports = (env) => {
       disableHostCheck: true,
       proxy: [
         {
-          context: ['/superapp/openAccountCenter/**'],
-          target: 'https://gw-api-omega-qa.qingchunbank.com/superapp/openAccountCenter/',
+          context: ['/omega/**'],
+          target: 'https://gw-api-omega-qa.qingchunbank.com/',
           secure: false
         }
       ]
     },
     devtool: "source-map",
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                importLoaders: 1,
+                modules: true,
+                sourceMap: true
+              }
+            },
+            postcssConfig,
+          ]
+        },
+        {
+          test: /\.scss$/,
+          use: [
+            'style-loader',
+            'css-loader',
+            postcssConfig,
+            {
+              loader: 'sass-loader',
+              options: {
+                sassLoader: {
+                  includePaths: [
+                    path.resolve(__dirname, "src/style"),
+                    path.resolve(__dirname, "src/components")
+                  ]
+                }
+              }
+            }
+          ],
+        }
+      ]
+    },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),   // Enable HMR
       new webpack.DefinePlugin({

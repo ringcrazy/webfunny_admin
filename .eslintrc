@@ -34,7 +34,7 @@
      */
 //    "comma-dangle": [2, "never"],    // http://eslint.org/docs/rules/comma-dangle   不允许结尾有逗号
     "no-cond-assign": [2, "always"], // http://eslint.org/docs/rules/no-cond-assign  不允许在条件表达式中赋值?
-//    "no-console": 1,                 // http://eslint.org/docs/rules/no-console  警告代码中有console.log()
+    "no-console": 1,                 // http://eslint.org/docs/rules/no-console  警告代码中有console.log()
     "no-debugger": 1,                // http://eslint.org/docs/rules/no-debugger 警告使用调试器
     "no-alert": 1,                   // http://eslint.org/docs/rules/no-alert  警告使用alert
     "no-constant-condition": 1,      // http://eslint.org/docs/rules/no-constant-condition  警告常量表达式
@@ -63,7 +63,7 @@
       "allowKeywords": true
     }],
     "eqeqeq": 2,                     // http://eslint.org/docs/rules/eqeqeq  使用强等号
-    "guard-for-in": 2,               // http://eslint.org/docs/rules/guard-for-in 使用for-in 循环需要判断是否属于本对象的属性,否则会遍历原型链上的属性
+    "guard-for-in": 1,               // http://eslint.org/docs/rules/guard-for-in 使用for-in 循环需要判断是否属于本对象的属性,否则会遍历原型链上的属性
     "no-caller": 2,                  // http://eslint.org/docs/rules/no-caller 禁止使用arguments.caller and arguments.callee ,已经被遗弃
     "no-else-return": 2,             // http://eslint.org/docs/rules/no-else-return 如果if块包含return语句，则else块变得不必要。 其内容可以放在块外。
     "no-eq-null": 2,                 // http://eslint.org/docs/rules/no-eq-null  null 值比较用强等
@@ -115,8 +115,8 @@
       "before": false,
       "after": true
     }],
-    "comma-style": [2, "last"],      // http://eslint.org/docs/rules/comma-style 强制执行一致的逗号风格
-    //"eol-last": 2,                   // http://eslint.org/docs/rules/eol-last  在文件末尾需要或禁止换行
+    "comma-style": [2, "first"],      // http://eslint.org/docs/rules/comma-style 强制执行一致的逗号风格
+    "eol-last": 2,                   // http://eslint.org/docs/rules/eol-last  在文件末尾需要或禁止换行
     //"func-names": 1,                 // http://eslint.org/docs/rules/func-names 禁止匿名函数
     "key-spacing": [2, {             // http://eslint.org/docs/rules/key-spacing 在对象文字属性中的键和值之间强制使用一致的间距
       "beforeColon": false,
@@ -159,7 +159,7 @@
     "react/no-did-update-set-state": 1, // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-update-set-state.md 防止在componentDidUpdate中使用setState
 //    "react/no-multi-comp": 1,        // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md 防止每个文件的多个组件定义
     "react/no-unknown-property": 1,  // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unknown-property.md 防止使用未知的DOM属性
-    "react/prop-types": 2,           // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prop-types.md 在React组件定义中防止缺少props验证
+//    "react/prop-types": 2,           // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prop-types.md 在React组件定义中防止缺少props验证
     "react/react-in-jsx-scope": 1,   // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md 在使用JSX时防止丢失React
     "react/self-closing-comp": 1,    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md 防止没有子项的组件的额外结束标记
     //"react/jsx-wrap-multilines": 2,      // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/wrap-multilines.md  跟no-extra-parens 冲突了
