@@ -1,0 +1,16 @@
+import React from "react"
+import { bindActionCreators } from "redux"
+import { connect } from "react-redux"
+import {0} from "Modules/{1}"
+import * as actions from "Modules/{1}/action"
+
+const {0}Container = props => <{0} {...props} />
+
+const mapStateToProps = state => {
+  const { {1} } = state
+  return { ...{1} }
+}
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ ...actions }, dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)({0}Container)

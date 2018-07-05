@@ -1,0 +1,4 @@
+import {0}Container from "Containers/{1}"
+export const {0} = props => <Bundle load={{0}Container} title="{1}" >
+  {Container => <Container {...props} />}
+</Bundle>

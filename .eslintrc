@@ -1,0 +1,193 @@
+// http://eslint.cn/docs/rules/
+{
+  "parser": "babel-eslint",          // https://github.com/babel/babel-eslint
+  "plugins": [
+    "react"                          // https://github.com/yannickcr/eslint-plugin-react
+  ],
+  "env": {                           // http://eslint.org/docs/user-guide/configuring.html#specifying-environments
+    "browser": true,                 // browser global variables
+    "node": true                     // Node.js global variables and Node.js-specific rules
+  },
+  "rules": {
+    /**
+     * Strict mode
+     */
+    // babel inserts "use strict"; for us
+    "strict": [2, "never"],          // http://eslint.org/docs/rules/strict  不允许使用严格模式 bable为我们导入了use strict
+    /**
+     * ES6
+     */
+    "no-var": 2,                     // http://eslint.org/docs/rules/no-var  不允许var 定义变量
+    "prefer-const": 2,               // http://eslint.org/docs/rules/prefer-const  对于在声明之后从未重新分配的变量，需要const声明
+    /**
+     * Variables
+     */
+    "no-shadow": 2,                  // http://eslint.org/docs/rules/no-shadow   不允许申明外部作用域已经申明过的变量
+    "no-shadow-restricted-names": 2, // http://eslint.org/docs/rules/no-shadow-restricted-names  不允许定义受限的词, 或者关键字
+    "no-unused-vars": [2, {          // http://eslint.org/docs/rules/no-unused-vars 不允许未使用的变量
+      "vars": "local",
+      "args": "after-used"
+    }],
+    "no-use-before-define": 2,       // http://eslint.org/docs/rules/no-use-before-define  不允许使用未定义的变量
+    /**
+     * Possible errors
+     */
+//    "comma-dangle": [2, "never"],    // http://eslint.org/docs/rules/comma-dangle   不允许结尾有逗号
+    "no-cond-assign": [2, "always"], // http://eslint.org/docs/rules/no-cond-assign  不允许在条件表达式中赋值?
+//    "no-console": 1,                 // http://eslint.org/docs/rules/no-console  警告代码中有console.log()
+    "no-debugger": 1,                // http://eslint.org/docs/rules/no-debugger 警告使用调试器
+    "no-alert": 1,                   // http://eslint.org/docs/rules/no-alert  警告使用alert
+    "no-constant-condition": 1,      // http://eslint.org/docs/rules/no-constant-condition  警告常量表达式
+    "no-dupe-keys": 2,               // http://eslint.org/docs/rules/no-dupe-keys 对象中不允许重复的键
+    "no-duplicate-case": 2,          // http://eslint.org/docs/rules/no-duplicate-case switch 表达式不允许重复的case
+    "no-empty": 2,                   // http://eslint.org/docs/rules/no-empty 禁止空的代码块
+    "no-ex-assign": 2,               // http://eslint.org/docs/rules/no-ex-assign 不允许在catch给exception 赋值
+    "no-extra-boolean-cast": 0,      // http://eslint.org/docs/rules/no-extra-boolean-cast 不必要的布尔转换(不判断)
+    "no-extra-semi": 2,              // http://eslint.org/docs/rules/no-extra-semi 不允许不必要的封号
+    "no-func-assign": 2,             // http://eslint.org/docs/rules/no-func-assign 不允许重新赋值给一个已经申明的函数
+    "no-inner-declarations": 2,      // http://eslint.org/docs/rules/no-inner-declarations 不允许在一个代码块中申明一个函数
+    "no-invalid-regexp": 2,          // http://eslint.org/docs/rules/no-invalid-regexp 不允许无效的正则表达式
+    "no-irregular-whitespace": 2,    // http://eslint.org/docs/rules/no-irregular-whitespace 禁止字符串和注释之外的不规则空格
+    "no-obj-calls": 2,               // http://eslint.org/docs/rules/no-obj-calls 不允许将全局对象的属性用作一个函数
+    "no-sparse-arrays": 2,           // http://eslint.org/docs/rules/no-sparse-arrays 不允许稀疏数组
+    "no-unreachable": 2,             // http://eslint.org/docs/rules/no-unreachable  不允许无法访问的代码
+    "use-isnan": 2,                  // http://eslint.org/docs/rules/use-isnan 用isNaN来判断NaN 而不是 ==
+    "block-scoped-var": 2,           // http://eslint.org/docs/rules/block-scoped-var  在其定义的范围内强制使用变量  在代码块中定义变量,在代码块之外使用变量
+    /**
+     * Best practices
+     */
+    "consistent-return": 2,          // http://eslint.org/docs/rules/consistent-return   代码中如果有多处返回值, 要么都有返回值, 要么都没有返回值
+    "curly": [2, "multi-line"],      // http://eslint.org/docs/rules/curly  所有的控制语句都要加大括号
+    "default-case": 2,               // http://eslint.org/docs/rules/default-case switch语句需要default
+    "dot-notation": [2, {            // http://eslint.org/docs/rules/dot-notation 强制执行圆点符号
+      "allowKeywords": true
+    }],
+    "eqeqeq": 2,                     // http://eslint.org/docs/rules/eqeqeq  使用强等号
+    "guard-for-in": 2,               // http://eslint.org/docs/rules/guard-for-in 使用for-in 循环需要判断是否属于本对象的属性,否则会遍历原型链上的属性
+    "no-caller": 2,                  // http://eslint.org/docs/rules/no-caller 禁止使用arguments.caller and arguments.callee ,已经被遗弃
+    "no-else-return": 2,             // http://eslint.org/docs/rules/no-else-return 如果if块包含return语句，则else块变得不必要。 其内容可以放在块外。
+    "no-eq-null": 2,                 // http://eslint.org/docs/rules/no-eq-null  null 值比较用强等
+    "no-eval": 1,                    // http://eslint.org/docs/rules/no-eval 不允许用eval
+    "no-extend-native": 2,           // http://eslint.org/docs/rules/no-extend-native 不允许原生类型的定义 Object.prototype.a = "a";
+    "no-extra-bind": 2,              // http://eslint.org/docs/rules/no-extra-bind  ???不懂
+    "no-fallthrough": 2,             // http://eslint.org/docs/rules/no-fallthrough switch 两个case之间需要break
+    "no-floating-decimal": 2,        // http://eslint.org/docs/rules/no-floating-decimal  不允许数字文字中的前导或尾随小数点
+    "no-implied-eval": 2,            // http://eslint.org/docs/rules/no-implied-eval  不允许使用eval（） - 类似的方法
+    "no-lone-blocks": 2,             // http://eslint.org/docs/rules/no-lone-blocks 禁止不必要的嵌套块
+    "no-loop-func": 2,               // http://eslint.org/docs/rules/no-loop-func 不允许函数声明和循环语句内的表达式
+    "no-multi-str": 2,               // http://eslint.org/docs/rules/no-multi-str 禁止多行字符串
+    "no-native-reassign": 2,         // http://eslint.org/docs/rules/no-native-reassign 禁止给原生的对象赋值
+    "no-new": 2,                     // http://eslint.org/docs/rules/no-new 禁止直接new, 需要有赋值语句
+    "no-new-func": 2,                // http://eslint.org/docs/rules/no-new-func  禁止 var x = new Function("a", "b", "return a + b");
+    "no-new-wrappers": 2,            // http://eslint.org/docs/rules/no-new-wrappers  错误:var stringObject = new String("Hello world");  正确:var text = String(someValue);
+    "no-octal": 2,                   // http://eslint.org/docs/rules/no-octal 不允许八进制文字
+    "no-octal-escape": 2,            // http://eslint.org/docs/rules/no-octal-escape 不允许字符串中的八进制转义序列
+    "no-param-reassign": 2,          // http://eslint.org/docs/rules/no-param-reassign 不允许重新分配函数参数 (给参数赋值)
+    "no-proto": 2,                   // http://eslint.org/docs/rules/no-proto 不允许使用__proto__属性  使用 var a = Object.getPrototypeOf(obj);
+    "no-redeclare": 2,               // http://eslint.org/docs/rules/no-redeclare 不允许变量重新声明
+    "no-return-assign": 2,           // http://eslint.org/docs/rules/no-return-assign 不允许返回语句中的赋值运算符
+    "no-script-url": 2,              // http://eslint.org/docs/rules/no-script-url 不允许url写javascript location.href = "javascript:void(0)";
+    "no-self-compare": 2,            // http://eslint.org/docs/rules/no-self-compare 不允许比较同一个变量或者相同的值
+    "no-sequences": 2,               // http://eslint.org/docs/rules/no-sequences 不允许逗号运算符
+    "no-throw-literal": 2,           // http://eslint.org/docs/rules/no-throw-literal 不允许将文字作为异常抛出
+    "no-with": 2,                    // http://eslint.org/docs/rules/no-with 不允许width 语句
+    "radix": 2,                      // http://eslint.org/docs/rules/radix 在使用parseInt（）时强制执行radix参数的一致使用，不确定是否需要
+    "vars-on-top": 2,                // http://eslint.org/docs/rules/vars-on-top var声明放置在它们包含作用域的顶部
+    "wrap-iife": [2, "any"],         // http://eslint.org/docs/rules/wrap-iife 需要在立即函数调用周围使用圆括号
+    "yoda": 2,                       // http://eslint.org/docs/rules/yoda  ???不知道
+    /**
+     * Style
+     */
+    "indent": [2, 2],                // http://eslint.org/docs/rules/indent  一致的缩进
+    "brace-style": [2,               // http://eslint.org/docs/rules/brace-style 对块执行一致的大括号风格
+      "1tbs", {
+        "allowSingleLine": true
+      }],
+    "quotes": [
+      1, "double", {
+        "avoidEscape": true
+      }    // http://eslint.org/docs/rules/quotes  双引号引号
+    ],
+    "camelcase": [2, {               // http://eslint.org/docs/rules/camelcase 驼峰命名
+      "properties": "never"
+    }],
+    "comma-spacing": [2, {           // http://eslint.org/docs/rules/comma-spacing 在逗号前后使用一致的间距
+      "before": false,
+      "after": true
+    }],
+    "comma-style": [2, "last"],      // http://eslint.org/docs/rules/comma-style 强制执行一致的逗号风格
+    //"eol-last": 2,                   // http://eslint.org/docs/rules/eol-last  在文件末尾需要或禁止换行
+    //"func-names": 1,                 // http://eslint.org/docs/rules/func-names 禁止匿名函数
+    "key-spacing": [2, {             // http://eslint.org/docs/rules/key-spacing 在对象文字属性中的键和值之间强制使用一致的间距
+      "beforeColon": false,
+      "afterColon": true
+    }],
+    "new-cap": [1, {                 // http://eslint.org/docs/rules/new-cap 要求构造函数名以大写字母开头
+      "newIsCap": true
+    }],
+    "no-multiple-empty-lines": [2, { // http://eslint.org/docs/rules/no-multiple-empty-lines   不允许有多行空行
+      "max": 2
+    }],
+    "no-nested-ternary": 2,          // http://eslint.org/docs/rules/no-nested-ternary  不允许嵌套的三元表达式
+    "no-new-object": 2,              // http://eslint.org/docs/rules/no-new-object  禁止Object构造函数
+    "no-spaced-func": 2,             // http://eslint.org/docs/rules/no-spaced-func  方法名和括号之间不允许空格
+    "no-trailing-spaces": 2,         // http://eslint.org/docs/rules/no-trailing-spaces 不允许在行尾结束空格
+    "no-extra-parens": 1,               // http://eslint.org/docs/rules/no-extra-parens  不需要多余的括号
+    "no-underscore-dangle": 0,       // http://eslint.org/docs/rules/no-underscore-dangle 不允许在标识符中悬挂下划线
+    //"one-var": [2, "never"],         // http://eslint.org/docs/rules/one-var  强制变量在函数中一起或单独声明
+    "padded-blocks": [2, "never"],   // http://eslint.org/docs/rules/padded-blocks 需要或不允许块内填充 自己看,不好描述
+    "semi": [2, "never"],           // http://eslint.org/docs/rules/semi  ??? 不懂
+    "semi-spacing": [2, {            // http://eslint.org/docs/rules/semi-spacing
+      "before": false,
+      "after": true
+    }],
+    "keyword-spacing": 2,       // http://eslint.org/docs/rules/space-after-keywords 在关键字之前和之后强制一致的间隔
+    "space-before-blocks": 2,        // http://eslint.org/docs/rules/space-before-blocks 在块之前强制一致的间距
+    "space-before-function-paren": [2, "never"], // http://eslint.org/docs/rules/space-before-function-paren 在函数定义开始括号之前强制使用一致的间距
+    "space-infix-ops": 2,            // http://eslint.org/docs/rules/space-infix-ops 需要在中缀运算符周围留出间距
+    "spaced-comment": 2,        // http://eslint.org/docs/rules/spaced-comment 在注释中的//或/ *后面强制一致的间距
+    /**
+     * JSX style
+     */
+    "react/display-name": 0,         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/display-name.md  防止在React组件定义中缺少displayName
+    "react/jsx-boolean-value": 1,    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-boolean-value.md  在JSX中强制执行布尔属性符号
+    "react/jsx-no-undef": 1,         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-undef.md 在JSX中禁止未声明的变量
+    "react/jsx-sort-props": 0,       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-sort-props.md 执行道具字母顺序排序
+    "react/jsx-sort-prop-types": 0,  // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-sort-prop-types.md
+    "react/jsx-uses-react": 1,       // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-uses-react.md 防止React被错误地标记为未使用
+    "react/jsx-uses-vars": 1,        // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-uses-vars.md 防止在JSX中使用的变量被错误地标记为未使用
+    "react/no-did-update-set-state": 1, // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-update-set-state.md 防止在componentDidUpdate中使用setState
+//    "react/no-multi-comp": 1,        // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md 防止每个文件的多个组件定义
+    "react/no-unknown-property": 1,  // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unknown-property.md 防止使用未知的DOM属性
+    "react/prop-types": 2,           // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prop-types.md 在React组件定义中防止缺少props验证
+    "react/react-in-jsx-scope": 1,   // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/react-in-jsx-scope.md 在使用JSX时防止丢失React
+    "react/self-closing-comp": 1,    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md 防止没有子项的组件的额外结束标记
+    //"react/jsx-wrap-multilines": 2,      // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/wrap-multilines.md  跟no-extra-parens 冲突了
+    "react/sort-comp": [1, {         // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md 强制组件方法顺序
+      "order": [
+        "constructor",
+        "displayName",
+        "propTypes",
+        "contextTypes",
+        "childContextTypes",
+        "mixins",
+        "statics",
+        "defaultProps",
+        "getDefaultProps",
+        "getInitialState",
+        "getChildContext",
+        "componentWillMount",
+        "componentDidMount",
+        "componentWillReceiveProps",
+        "shouldComponentUpdate",
+        "componentWillUpdate",
+        "componentDidUpdate",
+        "componentWillUnmount",
+        "/^on.+$/",
+        "/^get.+$/",
+        "/^render.+$/",
+        "render"
+      ]
+    }]
+  }
+}

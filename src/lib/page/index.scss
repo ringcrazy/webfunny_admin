@@ -1,0 +1,51 @@
+// 进出场动画
+// 向左滑入
+.push-enter {
+    transform: translate3D(100%, 0, 0);
+    transition: transform .2s ease-in;
+  
+    &.push-enter-active {
+      transform: translate3D(0, 0, 0);
+    }
+  }
+  
+  // 向左滑出
+  .push-leave {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    transform: translate3D(0, 0, 0);
+    transition: transform .15s ease-out;
+  
+    &.push-leave-active {
+      opacity: 0.01;
+      transform: translate3D(-100%, 0, 0);
+    }
+  }
+  
+  // 向右滑入
+  .back-enter {
+    transform: translate3D(-100%, 0, 0);
+    transition: transform .2s ease-in;
+  
+    &.back-enter-active {
+      transform: translate3D(0, 0, 0);
+    }
+  }
+  
+  // 向右滑出
+  .back-leave {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 1;
+    transform: translate3D(0, 0, 0);
+    transition: transform .15s ease-out;
+  
+    &.back-leave-active {
+      opacity: 0.01;
+      transform: translate3D(100%, 0, 0);
+    }
+  }
+  

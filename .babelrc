@@ -1,0 +1,14 @@
+{
+  "presets": [
+    "react",
+    ["latest", {"modules": false}],
+    "stage-3"
+  ],
+  "plugins": [
+    "react-hot-loader/babel",         // Enables React code to work with HMR
+    ["import", {
+      "libraryName": "antd-mobile",
+      "style": true
+    }]
+  ]
+}

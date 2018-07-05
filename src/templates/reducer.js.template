@@ -1,0 +1,21 @@
+import { handleActions } from "redux-actions"
+
+const initialState = {
+  "isFetching": false
+}
+
+export default handleActions({
+
+  update{0}State: (state = initialState, { payload }) => {
+    return {
+      ...state,
+      ...payload
+    }
+  },
+
+  clear{0}State: () => {
+    return {
+      ...initialState
+    }
+  }
+}, initialState)

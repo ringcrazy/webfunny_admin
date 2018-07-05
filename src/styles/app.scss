@@ -1,0 +1,25 @@
+body {
+  font-family: Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", sans-serif;
+  padding: 0;
+  margin: 0;
+  background-color: #FFF!important;
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+  color: #ccc!important;
+  direction: rtl;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #ccc!important;
+  direction: rtl;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #ccc!important;
+  direction: rtl;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #ccc!important;
+  direction: rtl;
+}

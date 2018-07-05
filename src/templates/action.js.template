@@ -1,0 +1,5 @@
+import { createAction } from "redux-actions"
+
+export const update{0}State = createAction("update{0}State", payload => payload)
+
+export const clear{0}State = createAction("clear{0}State")

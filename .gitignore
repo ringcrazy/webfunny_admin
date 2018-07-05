@@ -1,0 +1,7 @@
+node_modules
+dist/
+node-debug.log
+assets.json
+.DS_Store
+.idea/
+.idea/workspace.xml
