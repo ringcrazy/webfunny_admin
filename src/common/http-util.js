@@ -180,15 +180,15 @@ export default class HttpUtil {
     // 需要通过app来获取
     // const ctx = window.bridge && window.bridge.getCachedContext()
     const fetchCommonParams = {
-      "mode": "cors",
-      "credentials": "same-origin"
+      "mode": "cors"
+      , "credentials": "same-origin"
     }
     const headers = {
-      "Accept": "*/*",
-      "Content-Type": "application/json",
-      "app-info": APP_INFO,
-      "access-token": window.appState.accessToken, // ctx.user.accessToken
-      "app-version": APP_VERSION
+      "Accept": "*/*"
+      , "Content-Type": "application/json"
+      , "app-info": APP_INFO
+      , "access-token": window.appState.accessToken // ctx.user.accessToken
+      , "app-version": APP_VERSION
     }
     return Object.assign({}, fetchCommonParams, { headers })
   }

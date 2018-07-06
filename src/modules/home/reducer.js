@@ -8,12 +8,12 @@ export default handleActions({
 
   updateHomeState: (state = initialState, { payload }) => {
     return {
-      ...state,
-      ...payload
+      ...state
+      , ...payload
     }
-  },
+  }
 
-  clearHomeState: () => {
+  , clearHomeState: () => {
     return {
       ...initialState
     }

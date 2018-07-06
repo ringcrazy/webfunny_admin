@@ -27,8 +27,8 @@ Page.defaultProps = {
 }
 
 Page.PropTypes = {
-  pageAnimate: PropTypes.string,
-  ident: PropTypes.string,
-  children: PropTypes.list
+  pageAnimate: PropTypes.string
+  , ident: PropTypes.string
+  , children: PropTypes.list
 }
 export default Page

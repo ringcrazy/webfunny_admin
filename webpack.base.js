@@ -3,7 +3,18 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
-
+const postcssConfig = {
+  loader: 'postcss-loader',
+  options: {
+    plugins: () => [
+      autoprefixer({browsers: ['> 1%', 'last 4 versions']}),
+      pxtorem({
+        rootValue: 100,
+        propWhiteList: [],
+      })
+    ]
+  }
+};
 module.exports = {
   module: {
     rules: [
@@ -21,6 +32,23 @@ module.exports = {
           "babel-loader"
         ]
       },
+
+      {
+        test: /\.js?$/,
+        exclude: [
+          /node_modules/,
+          /src\/lib/
+        ],
+        loader: ["babel-loader", "eslint-loader"]
+      },
+      {
+        test: /\.js?$/,
+        exclude: [
+          /node_modules/,
+          /src\/lib/
+        ],
+        loader: "eslint-loader"
+      },
       {
         test: /\.less$/,
         use: [
@@ -32,8 +60,8 @@ module.exports = {
               plugins: () => [
                 autoprefixer({browsers: ['> 1%', 'last 4 versions']}),
                 pxtorem({
-                    rootValue: 100,
-                    propWhiteList: [],
+                  rootValue: 100,
+                  propWhiteList: [],
                 })
               ]
             }
@@ -42,17 +70,38 @@ module.exports = {
         ],
       },
       {
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        loader: ["babel-loader", "eslint-loader"]
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true,
+              sourceMap: true
+            }
+          },
+          postcssConfig,
+        ]
       },
       {
-        test: /\.js?$/,
-        exclude: [
-          /node_modules/,
-          /src\/lib/
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          postcssConfig,
+          {
+            loader: 'sass-loader',
+            options: {
+              sassLoader: {
+                includePaths: [
+                  path.resolve(__dirname, "src/style"),
+                  path.resolve(__dirname, "src/components")
+                ]
+              }
+            }
+          }
         ],
-        loader: "eslint-loader"
       },
       {
         test: /\.svg$/,

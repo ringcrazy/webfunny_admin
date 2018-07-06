@@ -8,32 +8,32 @@
  */
 const envUrls = {
   local: {
-    apiServerUrl: "https://gw-api-omega-qa.qingchunbank.com",
-    nodeApiServerUrl: "http://localhost:9010",
-    uri: "http://localhost:9010"
-  },
-  dev: {
-    apiServerUrl: "",
-    nodeApiServerUrl: "",
-    uri: ""
-  },
-  qa: {
-    apiServerUrl: "https://gw-api-omega-qa.qingchunbank.com",
-    assetsUrl: "https://omega-qa.qingchunbank.com",
-    nodeApiServerUrl: "https://cl-mobile-qa.qingchunbank.com",
-    uri: "https://omega-qa.qingchunbank.com"
-  },
-  staging: {
-    apiServerUrl: "https://gw-api-omega-staging.qingchunbank.com",
-    assetsUrl: "https://omega-staging.qingchunbank.com",
-    nodeApiServerUrl: "https://cl-mobile-stg.qingchunbank.com",
-    uri: "https://omega-staging.qingchunbank.com"
-  },
-  prod: {
-    apiServerUrl: "https://gw-api-omega.qingchunbank.com",
-    assetsUrl: "https://omega.qingchunbank.com",
-    nodeApiServerUrl: "https://cl-mobile.qingchunbank.com",
-    uri: "https://omega.qingchunbank.com"
+    apiServerUrl: "https://gw-api-omega-qa.qingchunbank.com"
+    , nodeApiServerUrl: "http://localhost:9010"
+    , uri: "http://localhost:9010"
+  }
+  , dev: {
+    apiServerUrl: ""
+    , nodeApiServerUrl: ""
+    , uri: ""
+  }
+  , qa: {
+    apiServerUrl: "https://gw-api-omega-qa.qingchunbank.com"
+    , assetsUrl: "https://omega-qa.qingchunbank.com"
+    , nodeApiServerUrl: "https://cl-mobile-qa.qingchunbank.com"
+    , uri: "https://omega-qa.qingchunbank.com"
+  }
+  , staging: {
+    apiServerUrl: "https://gw-api-omega-staging.qingchunbank.com"
+    , assetsUrl: "https://omega-staging.qingchunbank.com"
+    , nodeApiServerUrl: "https://cl-mobile-stg.qingchunbank.com"
+    , uri: "https://omega-staging.qingchunbank.com"
+  }
+  , prod: {
+    apiServerUrl: "https://gw-api-omega.qingchunbank.com"
+    , assetsUrl: "https://omega.qingchunbank.com"
+    , nodeApiServerUrl: "https://cl-mobile.qingchunbank.com"
+    , uri: "https://omega.qingchunbank.com"
   }
 }
 
@@ -56,8 +56,8 @@ const getUri = () => {
 }
 
 module.exports = {
-  getApiHost,
-  getNodeApiHost,
-  getAssetsUrl,
-  getUri
+  getApiHost
+  , getNodeApiHost
+  , getAssetsUrl
+  , getUri
 }

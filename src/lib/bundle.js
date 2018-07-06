@@ -43,10 +43,10 @@ Bundle.defaultProps = {
   entry: false
 }
 Bundle.propTypes = {
-  load: PropTypes.func,
-  children: PropTypes.func,
-  title: PropTypes.string,
-  entry: PropTypes.bool
+  load: PropTypes.func
+  , children: PropTypes.func
+  , title: PropTypes.string
+  , entry: PropTypes.bool
 }
 
 export default Bundle
