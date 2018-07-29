@@ -1,6 +1,5 @@
 /*
  * modukle.js
- * fishYu 
  *
  * 创建新模块
  */
@@ -137,7 +136,7 @@ function updateRouter(callBack) {
     data = data.substr(0, data.lastIndexOf("]"));
     var routerTemp = fs.readFileSync(__dirname + '/src/templates/router.js.template', 'utf8');
     var router = routerTemp.replace(/\{0\}/g, CompName).replace(/\{1\}/g, modlueName);
-    var buf = data + "\t" + router + "\n]"
+    var buf = data + "  " + router + "\n]"
     var buffer = new Buffer(buf);
     fs.writeFile(__dirname + '/src/router.js', buffer, function (err) {
         if (err) {

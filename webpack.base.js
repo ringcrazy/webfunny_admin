@@ -32,21 +32,14 @@ module.exports = {
           "babel-loader"
         ]
       },
-
       {
         test: /\.js?$/,
-        exclude: [
-          /node_modules/,
-          /src\/lib/
-        ],
-        loader: ["babel-loader", "eslint-loader"]
+        exclude: /node_modules/,
+        loader: "babel-loader"
       },
       {
         test: /\.js?$/,
-        exclude: [
-          /node_modules/,
-          /src\/lib/
-        ],
+        exclude: /node_modules/,
         loader: "eslint-loader"
       },
       {
@@ -107,7 +100,7 @@ module.exports = {
         test: /\.svg$/,
         include: [
           /node_modules/,
-          require.resolve('antd-mobile').replace(/warn\.js$/, ''),  // antd-mobile 内置svg
+          require.resolve('antd').replace(/warn\.js$/, ''),  // antd-mobile 内置svg
           path.resolve(__dirname, 'src/assets/images'),             // 业务代码本地私有 svg 存放目录
           path.resolve(__dirname, 'src/components')                 // 本地通用组件 svg 存放目录
         ],
@@ -133,8 +126,9 @@ module.exports = {
       Components: path.resolve(__dirname, 'src/components/'),
       Containers: path.resolve(__dirname, 'src/containers/'),
       Modules: path.resolve(__dirname, 'src/modules/'),
-      Config: path.resolve(__dirname, 'src/config/'),
-      Images: path.resolve(__dirname, 'src/assets/images/')
+      Common: path.resolve(__dirname, 'src/common/'),
+      Images: path.resolve(__dirname, 'src/assets/img/'),
+      ChartConfig: path.resolve(__dirname, 'src/chartConfig/')
     },
     mainFiles: ["index.web", "index"],
     modules: [path.resolve(__dirname, "src"), "node_modules"],

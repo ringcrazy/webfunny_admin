@@ -1,10 +1,6 @@
-import Utils from "Config/utils"
-import { Toast } from "antd-mobile"
+import Utils from "Common/utils"
 import "whatwg-fetch"
-let timeout = 10000
-const { app: { appVersion }, os: { type } } = window.bridge ? window.bridge.getCachedContext() : { app: { appVersion: "2.0.0" }, os: { type: "browser" } }
-const APP_INFO = `superapp/${type}/${appVersion}`
-const APP_VERSION = appVersion
+const timeout = 10000
 export default class HttpUtil {
   /**
    * 示例地址  http://localhost:9090/todo
@@ -73,7 +69,6 @@ export default class HttpUtil {
     if (logParams.body && logParams.body.length > 1024) {
       logParams.body = logParams.body.substr(0, 1024) + "..."
     }
-    console.log(fetchParams.method, fetchUrl, logParams)
     const { isShowLoading } = httpCustomerOpertion
     if (isShowLoading) {
       HttpUtil.showLoading()
@@ -85,8 +80,6 @@ export default class HttpUtil {
       const { customHead } = httpCustomerOpertion
       fetchParams.headers = Object.assign({}, fetchParams.headers, customHead)
     }
-    // 如果是聚信力的接口, 超时时长设置为2分钟, 分控优于体验, 其他接口时长默认为10秒
-    timeout = fetchUrl.includes("clCredit/jxl") ? 2 * 60 * 1000 : 10 * 1000
     const fetchPromise = new Promise((resolve, reject) => {
       fetch(fetchUrl, fetchParams).then(
         response => {
@@ -112,7 +105,7 @@ export default class HttpUtil {
               if (response.status === 404) {
                 msg = "您访问的内容走丢了…"
               }
-              Toast.info(msg, 2)
+              console.log(msg, 2)
               reject(HttpUtil.handleResult({ fetchStatus: "error", netStatus: response.status }, httpCustomerOpertion))
             }
           }).catch(e => {
@@ -131,7 +124,7 @@ export default class HttpUtil {
         }
         httpCustomerOpertion.isFetched = true
         if (httpCustomerOpertion.isHandleResult === true) {
-          Toast.info("网络开小差了，稍后再试吧", 2)
+          console.log("网络开小差了，稍后再试吧", 2)
         }
         reject(HttpUtil.handleResult({ fetchStatus: "error", error: errMsg }, httpCustomerOpertion))
       })
@@ -147,7 +140,7 @@ export default class HttpUtil {
   static handleResult(result, httpCustomerOpertion) {
     if (result.status && httpCustomerOpertion.isHandleResult === true) {
       const errMsg = result.msg || result.message || "服务器开小差了，稍后再试吧"
-      Toast.info(`${errMsg}（${result.status}）`, 2)
+      console.log(`${errMsg}（${result.status}）`, 2)
     }
     return result
   }
@@ -165,7 +158,7 @@ export default class HttpUtil {
           if (isShowLoading) {
             HttpUtil.hideLoading()
           }
-          Toast.info("网络开小差了，稍后再试吧", 2)
+          console.log("网络开小差了，稍后再试吧", 2)
           reject({ fetchStatus: "timeout" })
         }
       }, httpCustomerOpertion.timeout || timeout)
@@ -178,17 +171,13 @@ export default class HttpUtil {
    */
   static getHeaders() {
     // 需要通过app来获取
-    // const ctx = window.bridge && window.bridge.getCachedContext()
     const fetchCommonParams = {
-      "mode": "cors"
-      , "credentials": "same-origin"
+      // "mode": "cors",
+      // "credentials": "same-origin"
     }
     const headers = {
-      "Accept": "*/*"
-      , "Content-Type": "application/json"
-      , "app-info": APP_INFO
-      , "access-token": window.appState.accessToken // ctx.user.accessToken
-      , "app-version": APP_VERSION
+      // "Accept": "*/*",
+      // "Content-Type": "application/json;charset=utf-8",
     }
     return Object.assign({}, fetchCommonParams, { headers })
   }
@@ -197,22 +186,12 @@ export default class HttpUtil {
    * 添加loadding状态
    */
   static showLoading() {
-    if (window.bridge) {
-      window.bridge.showLoading().then(function() { })
-    } else {
-      Toast.loading("加载中...", 100)
-    }
   }
 
   /**
    * 取消loadding状态
    */
   static hideLoading() {
-    if (window.bridge) {
-      window.bridge.hideLoading()
-    } else {
-      Toast.hide()
-    }
   }
 }
 

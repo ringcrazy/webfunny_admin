@@ -19,8 +19,8 @@ const getStore = (history, extraReducers) => {
   }
   const store = createStore(
     combineReducers({
-      ...reducers
-      , router: routerReducer
+      ...reducers,
+      router: routerReducer
     }),
     middleware
   )

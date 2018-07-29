@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const Merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const pxtorem = require('postcss-pxtorem');
+// const pxtorem = require('postcss-pxtorem');
 const baseConfig = require('./webpack.base.js');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
@@ -32,8 +32,8 @@ module.exports = env => {
       disableHostCheck: true,
       proxy: [
         {
-          context: ['/omega/**'],
-          target: 'https://gw-api-omega-qa.qingchunbank.com/',
+          context: ['/webfunny/**'],
+          target: 'https://webfunny.com/',
           secure: false
         }
       ]

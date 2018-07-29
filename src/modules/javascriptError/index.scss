@@ -1,0 +1,107 @@
+.javascriptError-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #fff;
+    .sub-header {
+        display: flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-right: 30px;
+        color: #493e54;
+        border-bottom: 0;
+        position: relative;
+        margin: 0 0 10px;
+        line-height: 1;
+        font-size: 16px;
+        min-height: 62px;
+        box-shadow: 0 2px 0 rgba(37, 11, 54,.04);
+        .project-select-box {
+            width: 100%;
+            .ant-dropdown-link {
+                color: #2f2936;
+            }
+        }
+    }
+    .ant-tabs-nav .ant-tabs-tab-active {
+        color: #5d5cb6;
+    }
+    .ant-tabs-ink-bar {
+        background-color: #5d5cb6;
+    }
+    .ant-row {
+        padding: 0 20px;
+        margin: 20px 0;
+        .info-box {
+            width: 50%;
+            min-height: 100px;
+            text-align: center;
+            float: left;
+            span:first-child {
+                display: block;
+                font-size: 30px;
+            }
+            label {
+                font-size: 10px;
+                display: block;
+            }
+            .anticon {
+                color: #727082;
+            }
+        }
+    }
+    .ant-pagination {
+        text-align: right;
+        padding-right: 30px;
+        padding-bottom: 30px;
+    }
+    .chart-box {
+        width: 100%;
+        height: 200px;
+    }
+    .main-info-container {
+        padding-bottom: 20px;
+    }
+    .error-list-container {
+        p {
+            display: flex;
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #e8e8e8;
+            margin: 0;
+            padding: 0 20px;
+            font-size: 12px;
+            justify-content: flex-start;
+            align-items: center;
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+        span:nth-child(2) {
+            margin-left: 10px;
+            font-size: 16px;
+            color: #1890ff;
+        }
+        span:nth-child(3) {
+            margin-left: 10px;
+            color: #666;
+        }
+        span:nth-child(4) {
+            margin-left: 20px;
+            color: #333;
+        }
+        .status-icon {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e67482;
+        }
+    }
+    .ant-card-body {
+        padding: 0;
+    }
+
+}

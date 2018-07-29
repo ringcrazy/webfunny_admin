@@ -1,0 +1,25 @@
+.register-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #fff;
+    .box {
+        width: 600px;
+        height: 450px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 200px;
+        .input-box {
+            margin: 15px 0;
+        }
+    }
+    .btn {
+        margin: auto;
+        display: block;
+        float: left;
+        width: 50%;
+        margin-top: 10px;
+    }
+}

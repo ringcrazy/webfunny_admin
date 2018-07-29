@@ -1,1 +1,1 @@
-{ path: "/{1}", component: containers.{0} },
+{ path: prePath + "/{1}", component: containers.{0} },

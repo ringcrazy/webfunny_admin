@@ -14,7 +14,6 @@ import "../styles/entry"
 
 function init(reducers, extraRoutes, history) {
   history.listen((location, action) => {
-    console.log(location)
     if (action === "PUSH") {
       window.pageAnimate = "push"
     }

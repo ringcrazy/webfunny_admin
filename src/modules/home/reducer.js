@@ -1,19 +1,19 @@
 import { handleActions } from "redux-actions"
 
 const initialState = {
-  "isFetching": false
+  isFetching: false
 }
 
 export default handleActions({
 
   updateHomeState: (state = initialState, { payload }) => {
     return {
-      ...state
-      , ...payload
+      ...state,
+      ...payload
     }
-  }
+  },
 
-  , clearHomeState: () => {
+  clearHomeState: () => {
     return {
       ...initialState
     }

@@ -115,8 +115,8 @@
       "before": false,
       "after": true
     }],
-    "comma-style": [2, "first"],      // http://eslint.org/docs/rules/comma-style 强制执行一致的逗号风格
-    "eol-last": 2,                   // http://eslint.org/docs/rules/eol-last  在文件末尾需要或禁止换行
+    "comma-style": [2, "last"],      // http://eslint.org/docs/rules/comma-style 强制执行一致的逗号风格
+    //"eol-last": 2,                   // http://eslint.org/docs/rules/eol-last  在文件末尾需要或禁止换行
     //"func-names": 1,                 // http://eslint.org/docs/rules/func-names 禁止匿名函数
     "key-spacing": [2, {             // http://eslint.org/docs/rules/key-spacing 在对象文字属性中的键和值之间强制使用一致的间距
       "beforeColon": false,

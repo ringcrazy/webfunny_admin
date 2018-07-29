@@ -5,7 +5,17 @@
     <meta name="viewport">
     <meta name="format-detection" content="telephone=no">
     <title></title>
-    <script>
+    <link rel="icon" type="image/png" href="./assets/img/common/favicon.ico">
+    <script language="javascript">
+      // 引入监控js
+      var script = document.createElement('script');
+      script.async = 1;
+      script.id = "webmonitor";
+      script.setAttribute("monitor", "51ea2325-6d96-468a-a9af-3acd1cd6fce3")
+      script.src = "//localhost:8000/webmonitor.js?_t=" + parseInt(new Date().getTime()/86400000);
+      var dom = document.getElementsByTagName('script')[0];
+      dom.parentNode.insertBefore(script, dom);
+
       // viewport 设置
       // 针对原来高清方案的基础, 增加了根据屏幕宽度计算不同font-size 来达到对不同屏幕的适配
       var win = window;
@@ -37,7 +47,7 @@
           doc.head.appendChild(metaEl);
         }
         metaEl.setAttribute('content', 'width=device-width,user-scalable=no,initial-scale='+scale+',maximum-scale='+scale+',minimum-scale='+scale);
-        doc.documentElement.style.fontSize = _baseFontSize / 2 * dpr * _fontscale + 'px';
+        doc.documentElement.style.fontSize = _baseFontSize * dpr * _fontscale + 'px';
       };
       flex(100, 1);
     </script>
@@ -45,4 +55,5 @@
 <body>
 <div id="app"></div>
 </body>
+
 </html>
