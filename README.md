@@ -1,7 +1,7 @@
 安装依赖包： npm install
 本地运行：   npm run start
 
-技术组成: es6 + webpack + react + react-redux + react-router + node.js
+技术组成: es6 + webpack + react + react-redux + react-router + node.js v6.4.0
 
 如何增加业务线模块
 
