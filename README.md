@@ -14,7 +14,7 @@
     
 知乎讲解： https://zhuanlan.zhihu.com/p/35771536
 
-#如何运行
+如何运行:
 
 Node版本： v6.4.0
 
@@ -25,6 +25,7 @@ Node版本： v6.4.0
 运行完成后访问： localhost:9010/webfunny/
 
 
+如何打包：
 
 打包QA环境： npm run qa
 
