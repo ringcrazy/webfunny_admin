@@ -25,6 +25,7 @@ Node版本： v6.4.0
 运行完成后访问： localhost:9010/webfunny/
 
 
+
 打包QA环境： npm run qa
 
 打包staging环境：npm run staging
@@ -34,5 +35,6 @@ Node版本： v6.4.0
 
 
 一、如何增加业务线模块
+
     node module.js moduleName 即可快速创建一系列的模块代码
     
