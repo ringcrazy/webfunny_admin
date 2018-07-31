@@ -12,26 +12,27 @@
     
     这是一个运用于前端监控系统的项目，我在知乎上对其作用做了介绍。
     
-知乎讲解： https://zhuanlan.zhihu.com/p/35771536
+知乎讲解：
+    https://zhuanlan.zhihu.com/p/35771536
 
 如何运行:
 
-Node版本： v6.4.0
+    Node版本： v6.4.0
 
-安装依赖包： npm install
+    安装依赖包： npm install
 
-本地运行：   npm run start
+    本地运行：   npm run start
 
-运行完成后访问： localhost:9010/webfunny/
+    运行完成后访问： localhost:9010/webfunny/
 
 
 如何打包：
 
-打包QA环境： npm run qa
+    打包QA环境： npm run qa
 
-打包staging环境：npm run staging
+    打包staging环境：npm run staging
 
-打包生产环境： npm run prod
+    打包生产环境： npm run prod
 
 
 
