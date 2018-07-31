@@ -15,13 +15,22 @@
 知乎讲解： https://zhuanlan.zhihu.com/p/35771536
 
 #如何运行
+
 Node版本： v6.4.0
+
 安装依赖包： npm install
+
 本地运行：   npm run start
+
 运行完成后访问： localhost:9010/webfunny/
+
+
 打包QA环境： npm run qa
+
 打包staging环境：npm run staging
+
 打包生产环境： npm run prod
+
 
 
 一、如何增加业务线模块
