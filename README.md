@@ -23,7 +23,7 @@
 
     本地运行：   npm run start
 
-    运行完成后访问： localhost:9010/webfunny/
+    运行完成后访问： http://localhost:9010/webfunny/javascriptError   目前以这个页面为开始
 
 
 如何打包：
@@ -38,5 +38,45 @@
 
 一、如何增加业务线模块
 
-    node module.js moduleName 即可快速创建一系列的模块代码
+    node module.js moduleName 
+    
+    即可快速创建一系列的模块代码
+    modules, action, reducer, container, scss, router
+    
+二、如何部署打包的代码
+
+    需要安装Nginx服务器， 配置如下
+    server {
+        listen       8010;
+        server_name  localhost;
+        root /Users/jiangyw/WebstormProjects/webfunny/dist;
+        index  /webfunny/index.html;
+        location /webfunny/ {
+            try_files $uri /webfunny/index.html;
+        }
+    }
+    重启Nginx后
+    
+    访问 http://localhost:8010/webfunny/javascriptError 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
