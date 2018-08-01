@@ -55,10 +55,10 @@ class JavascriptError extends Component {
     const menu =
       <Menu>
         <Menu.Item key="0">
-          <a href="http://www.alipay.com/">1st menu item</a>
+          <a href="#">监控项目1号</a>
         </Menu.Item>
         <Menu.Item key="1">
-          <a href="http:// www.taobao.com/">2nd menu item</a>
+          <a href="#">监控项目2号</a>
         </Menu.Item>
       </Menu>
 
@@ -80,6 +80,11 @@ class JavascriptError extends Component {
             <Tabs defaultActiveKey="1" >
               <TabPane tab={<span><Icon type="area-chart" />月统计</span>} key="1">
                 <div id="jsErrorCountByDay" className="chart-box" />
+              </TabPane>
+              <TabPane tab={<span><Icon type="clock-circle" />实时统计</span>} key="2">
+                <div id="jsErrorCountByHour" className="chart-box" >
+                  即将完善
+                </div>
               </TabPane>
             </Tabs>
           </Col>

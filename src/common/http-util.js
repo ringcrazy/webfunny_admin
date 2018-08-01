@@ -3,9 +3,6 @@ import "whatwg-fetch"
 const timeout = 10000
 export default class HttpUtil {
   /**
-   * 示例地址  http://localhost:9090/todo
-   */
-  /**
    * get 请求
    * @param url
    * @param params
