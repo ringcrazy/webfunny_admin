@@ -7,42 +7,23 @@ const CleanPlugin = require("clean-webpack-plugin");
 const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
 const baseConfig = require('./webpack.base.js');
-const envConfig = require("./src/config/env_config.js");
+const envConfig = require("./src/common/env_config.js");
 const ManifestPlugin = require('webpack-manifest-plugin');
-
-const postcssConfig = {
-  loader: 'postcss-loader',
-  options: {
-    plugins: () => [
-      autoprefixer({browsers: ['> 1%', 'last 4 versions']}),
-      pxtorem({
-          rootValue: 100,
-          propWhiteList: [],
-      })
-    ]
-  }
-};
 
 module.exports = env => {
   const curEnv = env || "local"
-  const assetsUrl = envConfig.getAssetsUrl(curEnv, "/wac/")
+  const assetsUrl = envConfig.getAssetsUrl(curEnv, "/webfunny/")
   return Merge(baseConfig, {
     entry: {
       app: path.resolve(__dirname, 'src/index.js'),
       vendor: [
-        'classnames', 'fastclick',
-        'history/createBrowserHistory', 'moment',
-        'prop-types', 'react',
-        'react-dom', 'react-redux',
-        'react-router-dom', 'react-router-redux',
-        'react-time', 'react-transition-group',
-        'redux', 'redux-actions',
-        'redux-logger', 'redux-thunk',
-        'antd-mobile/lib/tabs', 'antd-mobile/lib/toast', 'antd-mobile/lib/list', 'antd-mobile/lib/button',
-        'antd-mobile/lib/input-item', 'antd-mobile/lib/icon', 'antd-mobile/lib/notice-bar', 'antd-mobile/lib/picker',
-        'antd-mobile/lib/white-space', 'antd-mobile/lib/checkbox', 'antd-mobile/lib/flex', 'antd-mobile/lib/popup',
-        'antd-mobile/lib/card', 'antd-mobile/lib/modal',
+        'classnames', 'moment', 'prop-types',
+        'react', 'react-dom', 'react-redux', 'react-router-dom', 'react-router-redux',
+        'react-time', 'react-transition-group', 'redux', 'redux-actions','redux-logger', 'redux-thunk',
+        'antd/lib/card', 'antd/lib/dropdown', 'antd/lib/row', 'antd/lib/col', 'antd/lib/tabs', 'antd/lib/menu',
+        'antd/lib/icon', 'antd/lib/pagination'
       ],
+      // Row, Col, Tabs, Card, Menu, Dropdown, Icon, Pagination
       // common: [
       //   'prius','zepto-webpack',
       //   'JS/lib/common-tool', 'JS/lib/underscore', 'JS/lib/cache', 'JS/lib/consts',
@@ -52,49 +33,8 @@ module.exports = env => {
     output: {
       filename: "[name].[chunkhash:8].js",
       chunkFilename: '[name].[chunkhash:8].chunk.js',
-      path: path.resolve(__dirname, 'dist/wac'),
+      path: path.resolve(__dirname, 'dist/webfunny'),
       publicPath: assetsUrl
-    },
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  importLoaders: 1,
-                  modules: true
-                }
-              },
-              postcssConfig
-            ]
-          })
-        },
-        {
-          test: /\.scss$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              'css-loader',
-              postcssConfig,
-              {
-                loader: 'sass-loader',
-                options: {
-                  sassLoader: {
-                    includePaths: [
-                      path.resolve(__dirname, "src/style"),
-                      path.resolve(__dirname, "src/components")
-                    ]
-                  }
-                }
-              }
-            ]
-          })
-        }
-      ]
     },
     plugins: [
       new CleanPlugin(['dist']),
@@ -107,7 +47,7 @@ module.exports = env => {
         comments: false,
         compress: {
           warnings: false,                                                          // 在UglifyJs删除没有用到的代码时不输出警告
-          //drop_console: (curEnv === 'staging' || curEnv === 'prod'),
+          drop_console: (curEnv === 'staging' || curEnv === 'prod'),
           collapse_vars: true,                                                      // 内嵌定义了但是只用到一次的变量
           reduce_vars: true,                                                        // 提取出出现多次但是没有定义成变量去引用的静态值
         }
@@ -148,9 +88,6 @@ module.exports = env => {
             return 0;
           }
         }
-      }),
-      new webpack.ProvidePlugin({
-        $: 'zepto-webpack'
       }),
       new ManifestPlugin({
         publicPath: assetsUrl
