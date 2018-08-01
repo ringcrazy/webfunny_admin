@@ -39,7 +39,7 @@ const getNodeApiHost = () => {
 //  relativePath   eg: "/ltvfe/cl/"
 const getAssetsUrl = (env = BUILD_ENV, relativePath) => {
   const assetsUrl = envUrls[env].assetsUrl || ""
-  const suffix = env === "local" ? "/" : relativePath
+  const suffix = env === "local" ? "/webfunny/" : relativePath
   return assetsUrl + suffix
 }
 
