@@ -1,6 +1,6 @@
 const envUrls = {
   local: {
-    apiServerUrl: "http://www.webfunny.cn",
+    apiServerUrl: "http://localhost:8010",
     nodeApiServerUrl: "http://localhost:9010",
     uri: "http://localhost"
   },
