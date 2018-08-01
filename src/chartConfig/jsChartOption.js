@@ -1,6 +1,6 @@
 export const jsErrorOption = (result) => {
   return {
-    color: [ "#e67482" ],
+    color: [ "#5d5cb6" ],
     tooltip: {
       trigger: "axis",
       // axisPointer: {

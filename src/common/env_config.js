@@ -1,8 +1,8 @@
 const envUrls = {
   local: {
-    apiServerUrl: "http://localhost:3000",
+    apiServerUrl: "http://www.webfunny.cn",
     nodeApiServerUrl: "http://localhost:9010",
-    uri: "http://localhost:3000"
+    uri: "http://localhost"
   },
   dev: {
     apiServerUrl: "",
@@ -10,22 +10,22 @@ const envUrls = {
     uri: ""
   },
   qa: {
-    apiServerUrl: "https://webfunny.cn",
-    assetsUrl: "https://webfunny.cn",
-    nodeApiServerUrl: "https://webfunny.cn",
-    uri: "https://webfunny.cn"
+    apiServerUrl: "https://www.webfunny.cn",
+    assetsUrl: "https://www.webfunny.cn",
+    nodeApiServerUrl: "https://www.webfunny.cn",
+    uri: "https://www.webfunny.cn"
   },
   staging: {
-    apiServerUrl: "https://webfunny.cn",
-    assetsUrl: "https://webfunny.cn",
-    nodeApiServerUrl: "https://webfunny.cn",
-    uri: "https://webfunny.cn"
+    apiServerUrl: "https://www.webfunny.cn",
+    assetsUrl: "https://www.webfunny.cn",
+    nodeApiServerUrl: "https://www.webfunny.cn",
+    uri: "https://www.webfunny.cn"
   },
   prod: {
-    apiServerUrl: "https://webfunny.cn",
-    assetsUrl: "https://webfunny.cn",
-    nodeApiServerUrl: "https://webfunny.cn",
-    uri: "https://webfunny.cn"
+    apiServerUrl: "https://www.webfunny.cn",
+    assetsUrl: "https://www.webfunny.cn",
+    nodeApiServerUrl: "https://www.webfunny.cn",
+    uri: "https://www.webfunny.cn"
   }
 }
 
