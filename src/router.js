@@ -9,4 +9,5 @@ export default [
   { path: prePath + "/register", component: containers.Register },
   { path: prePath + "/login", component: containers.Login },
   { path: prePath + "/javascriptError", component: containers.JavascriptError },
+  { path: prePath + "/javascriptErrorDetail", component: containers.JavascriptErrorDetail },
 ]

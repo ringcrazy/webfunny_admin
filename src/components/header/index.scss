@@ -5,4 +5,24 @@
   top: 0;
   background: #fff;
   z-index: 9999;
+  .sub-header {
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    color: #493e54;
+    border-bottom: 0;
+    position: relative;
+    margin: 0 0 10px;
+    line-height: 1;
+    font-size: 16px;
+    min-height: 62px;
+    box-shadow: 0 2px 0 rgba(37, 11, 54,.04);
+    .project-select-box {
+      width: 100%;
+      .ant-dropdown-link {
+        color: #2f2936;
+      }
+    }
+  }
 }

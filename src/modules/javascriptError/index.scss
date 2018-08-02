@@ -5,26 +5,7 @@
     width: 100%;
     min-height: 100%;
     background: #fff;
-    .sub-header {
-        display: flex;
-        align-items: center;
-        padding-left: 30px;
-        padding-right: 30px;
-        color: #493e54;
-        border-bottom: 0;
-        position: relative;
-        margin: 0 0 10px;
-        line-height: 1;
-        font-size: 16px;
-        min-height: 62px;
-        box-shadow: 0 2px 0 rgba(37, 11, 54,.04);
-        .project-select-box {
-            width: 100%;
-            .ant-dropdown-link {
-                color: #2f2936;
-            }
-        }
-    }
+
     .ant-tabs-nav .ant-tabs-tab-active {
         color: #5d5cb6;
     }
@@ -75,6 +56,7 @@
             font-size: 12px;
             justify-content: flex-start;
             align-items: center;
+            cursor: pointer;
             &:last-child {
                 border-bottom: 0;
             }

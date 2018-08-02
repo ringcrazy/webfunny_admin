@@ -29,3 +29,8 @@ import JavascriptErrorContainer from "Containers/javascriptError"
 export const JavascriptError = props => <Bundle loadContainer={JavascriptErrorContainer} title="JS错误列表" >
   {Container => <Container {...props} />}
 </Bundle>
+
+import JavascriptErrorDetailContainer from "Containers/javascriptErrorDetail"
+export const JavascriptErrorDetail = props => <Bundle loadContainer={JavascriptErrorDetailContainer} title="javascriptErrorDetail" >
+  {Container => <Container {...props} />}
+</Bundle>

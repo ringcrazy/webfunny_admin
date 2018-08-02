@@ -1,5 +1,6 @@
 import "./index.scss"
 import React, { Component } from "react"
+import Header from "Components/header"
 import { Row, Col, Tabs, Card, Menu, Dropdown, Icon, Pagination } from "antd"
 import { jsErrorOption } from "ChartConfig/jsChartOption"
 const TabPane = Tabs.TabPane
@@ -52,28 +53,8 @@ class JavascriptError extends Component {
 
   render() {
     const { jsErrorList, totalPercent, pcPercent, iosPercent, androidPercent } = this.props
-    const menu =
-      <Menu>
-        <Menu.Item key="0">
-          <a href="#">监控项目1号</a>
-        </Menu.Item>
-        <Menu.Item key="1">
-          <a href="#">监控项目2号</a>
-        </Menu.Item>
-      </Menu>
-
     return <div className="javascriptError-container">
-      <section className="sub-header">
-        <div className="project-select-box">
-          <Dropdown overlay={menu} trigger={["click"]}>
-            <a className="ant-dropdown-link" href="#">
-              项目名字 <Icon type="down" />
-            </a>
-          </Dropdown>
-        </div>
-
-      </section>
-
+      <Header/>
       <Row>
         <Card className="main-info-container">
           <Col span={16}>
@@ -119,13 +100,16 @@ class JavascriptError extends Component {
             jsErrorList.map((error, index) => {
               const msgArr = error.errorMessage.split(": ")
               const len = msgArr.length
-              return <p key={index}><span className="status-icon"/><span>{msgArr[0] || "空"}</span><span>{msgArr[len - 1] || "..."}</span><span>({error.count}/次)</span></p>
+              return <p key={index} onClick={this.turnToDetail.bind(this)}><span className="status-icon"/><span>{msgArr[0] || "空"}</span><span>{msgArr[len - 1] || "..."}</span><span>({error.count}/次)</span></p>
             })
           }
         </Card>
       </Row>
       <Pagination defaultCurrent={6} total={30} />
     </div>
+  }
+  turnToDetail() {
+    this.props.history.push("javascriptErrorDetail")
   }
 }
 
