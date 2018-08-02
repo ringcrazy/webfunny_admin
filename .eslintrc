@@ -98,7 +98,7 @@
     /**
      * Style
      */
-    "indent": [2, 2],                // http://eslint.org/docs/rules/indent  一致的缩进
+    "indent": ["error", 2],                // http://eslint.org/docs/rules/indent  一致的缩进
     "brace-style": [2,               // http://eslint.org/docs/rules/brace-style 对块执行一致的大括号风格
       "1tbs", {
         "allowSingleLine": true

@@ -23,7 +23,6 @@ module.exports = env => {
         'antd/lib/card', 'antd/lib/dropdown', 'antd/lib/row', 'antd/lib/col', 'antd/lib/tabs', 'antd/lib/menu',
         'antd/lib/icon', 'antd/lib/pagination'
       ],
-      // Row, Col, Tabs, Card, Menu, Dropdown, Icon, Pagination
       // common: [
       //   'prius','zepto-webpack',
       //   'JS/lib/common-tool', 'JS/lib/underscore', 'JS/lib/cache', 'JS/lib/consts',
