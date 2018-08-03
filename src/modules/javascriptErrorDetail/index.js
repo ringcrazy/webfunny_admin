@@ -14,6 +14,7 @@ class JavascriptErrorDetail extends Component {
     this.props.getJavascriptErrorListByMsgAction({errorMsg}, (data) => {
       const { errorIndex } = this.props
       const errorList = data
+      console.log(errorList)
       const errorDetail = this.analysisError(errorList[errorIndex])
       this.props.updateJavascriptErrorDetailState({errorList, errorDetail})
     })
@@ -131,8 +132,8 @@ class JavascriptErrorDetail extends Component {
     const osVersion = error.os.split(" ")[1]
     const deviceName = error.deviceName
     const jsPathArray = error.errorStack.match(/\([(http)?:]?[\S]*\d+\)/g)
-    const tempArr = jsPathArray[0].split("/")
-    const titleDetail = tempArr[tempArr.length - 1]
+    const tempArr = jsPathArray ? jsPathArray[0].split("/") : []
+    const titleDetail = tempArr.length ? tempArr[tempArr.length - 1] : ""
     return {
       errorType,
       errorMessage,
