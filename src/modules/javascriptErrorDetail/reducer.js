@@ -1,7 +1,9 @@
 import { handleActions } from "redux-actions"
 
 const initialState = {
-  isFetching: false
+  errorIndex: 0,
+  errorDetail: {},
+  errorList: []
 }
 
 export default handleActions({

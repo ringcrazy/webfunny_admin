@@ -4,6 +4,7 @@
     left: 0;
     width: 100%;
     min-height: 100%;
+    padding-top: 62px;
     background: #fff;
 
     .ant-tabs-nav .ant-tabs-tab-active {
@@ -33,6 +34,11 @@
             }
         }
     }
+    .click-export {
+        font-size: 16px;
+        margin-left: 10px;
+        font-weight: bold;
+    }
     .ant-pagination {
         text-align: right;
         padding-right: 30px;
@@ -47,32 +53,33 @@
     }
     .error-list-container {
         p {
-            display: flex;
             height: 50px;
             line-height: 50px;
             border-bottom: 1px solid #e8e8e8;
             margin: 0;
             padding: 0 20px;
             font-size: 12px;
-            justify-content: flex-start;
-            align-items: center;
             cursor: pointer;
             &:last-child {
                 border-bottom: 0;
             }
         }
         span:nth-child(2) {
-            margin-left: 10px;
+            margin-left: 20px;
             font-size: 16px;
             color: #1890ff;
         }
         span:nth-child(3) {
-            margin-left: 10px;
+            margin-left: 20px;
             color: #666;
         }
         span:nth-child(4) {
             margin-left: 20px;
             color: #333;
+        }
+        span:last-child {
+            float: right;
+            font-size: 12px;
         }
         .status-icon {
             display: inline-block;

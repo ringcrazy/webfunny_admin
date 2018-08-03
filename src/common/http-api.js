@@ -13,7 +13,11 @@ const api = {
   // 根据JS错误量进行排序
   "getJsErrorSort": apiHost + "/api/v1/getJavascriptErrorSort",
   // 根据平台获取JS错误数量
-  "getJavascriptErrorCountByOs": apiHost + "/api/v1/getJavascriptErrorCountByOs"
+  "getJavascriptErrorCountByOs": apiHost + "/api/v1/getJavascriptErrorCountByOs",
+  // errorMsg 获取js错误列表
+  "getJavascriptErrorListByMsg": apiHost + "/api/v1/getJavascriptErrorListByMsg",
+  // 获取js错误详情
+  getJavascriptErrorDetail: id => apiHost + "/api/v1/javascriptErrorInfo/" + id,
 
 }
 
