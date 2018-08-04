@@ -113,6 +113,7 @@ class JavascriptErrorDetail extends Component {
       <Row className="table-container">
         足迹
       </Row>
+
       <Row className="table-container">
         <Table columns={columns} dataSource={data} scroll={{ x: 1300 }} />
       </Row>
