@@ -52,9 +52,11 @@ class JavascriptErrorDetail extends Component {
     const data = []
     const len = errorList.length > 100 ? 100 : errorList.length
     for (let i = 0; i < len; i ++) {
-      const error = this.analysisError(errorList[i])
-      const result = Object.assign({}, error)
-      data.push(result)
+      if (errorList[i]) {
+        const error = this.analysisError(errorList[i])
+        const result = Object.assign({}, error)
+        data.push(result)
+      }
     }
 
     return <div className="javascriptErrorDetail-container">
