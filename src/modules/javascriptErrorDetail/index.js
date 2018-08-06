@@ -52,11 +52,9 @@ class JavascriptErrorDetail extends Component {
     const data = []
     const len = errorList.length > 100 ? 100 : errorList.length
     for (let i = 0; i < len; i ++) {
-      if (errorList[i]) {
-        const error = this.analysisError(errorList[i])
-        const result = Object.assign({}, error)
-        data.push(result)
-      }
+      const error = this.analysisError(errorList[i])
+      const result = Object.assign({}, error)
+      data.push(result)
     }
 
     return <div className="javascriptErrorDetail-container">
@@ -139,6 +137,7 @@ class JavascriptErrorDetail extends Component {
   }
 
   analysisError(error) {
+    if (!error) return {}
     const errMsgArr = error.errorMessage.split(": ")
     const errorType = errMsgArr[0]
     const errorMessage = errMsgArr[errMsgArr.length - 1]
