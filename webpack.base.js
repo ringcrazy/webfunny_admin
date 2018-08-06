@@ -88,7 +88,7 @@ module.exports = {
             options: {
               sassLoader: {
                 includePaths: [
-                  path.resolve(__dirname, "src/style"),
+                  path.resolve(__dirname, "src/styles"),
                   path.resolve(__dirname, "src/components")
                 ]
               }
@@ -101,7 +101,7 @@ module.exports = {
         include: [
           /node_modules/,
           require.resolve('antd').replace(/warn\.js$/, ''),  // antd-mobile 内置svg
-          path.resolve(__dirname, 'src/assets/images'),             // 业务代码本地私有 svg 存放目录
+          path.resolve(__dirname, 'src/assets/img'),             // 业务代码本地私有 svg 存放目录
           path.resolve(__dirname, 'src/components')                 // 本地通用组件 svg 存放目录
         ],
         loader: "svg-sprite-loader",
