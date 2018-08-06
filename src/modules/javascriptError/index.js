@@ -1,7 +1,7 @@
 import "./index.scss"
 import React, { Component } from "react"
 import Header from "Components/header"
-import { Row, Col, Tabs, Card, Icon, Pagination } from "antd"
+import { Row, Col, Tabs, Card, Icon } from "antd"
 import { jsErrorOption } from "ChartConfig/jsChartOption"
 const TabPane = Tabs.TabPane
 const echarts = require("echarts")
@@ -95,17 +95,26 @@ class JavascriptError extends Component {
 
       </Row>
       <Row>
-        <Card className="error-list-container">
-          {
-            jsErrorList.map((error, index) => {
-              const msgArr = error.errorMessage.split(": ")
-              const len = msgArr.length
-              return <p key={index} onClick={this.turnToDetail.bind(this, error)}><span className="status-icon"/><span>{msgArr[0] || "空"}</span><span>{msgArr[len - 1] || "..."}</span><span>({error.count}/次)</span><Icon className="click-export" type="export" /><span><i>最近：</i>2018.11.11</span></p>
-            })
-          }
-        </Card>
+        <Tabs defaultActiveKey="1" >
+          <TabPane tab={<span><Icon type="tags-o" />错误列表</span>} key="1">
+            <Card className="error-list-container">
+              {
+                jsErrorList.map((error, index) => {
+                  const msgArr = error.errorMessage.split(": ")
+                  const len = msgArr.length
+                  return <p key={index} onClick={this.turnToDetail.bind(this, error)}><span className="status-icon"/><span>{msgArr[0] || "空"}</span><span>{msgArr[len - 1] || "..."}</span><span>({error.count}次)</span><Icon className="click-export" type="export" /><span><i>最近：</i>2018.11.11</span></p>
+                })
+              }
+            </Card>
+          </TabPane>
+          <TabPane tab={<span><Icon type="switcher" />错误页面</span>} key="2">
+            <div id="jsErrorByPage" className="chart-box" >
+              即将完善
+            </div>
+          </TabPane>
+        </Tabs>
+
       </Row>
-      <Pagination defaultCurrent={6} total={30} />
     </div>
   }
   turnToDetail(error) {

@@ -1,6 +1,6 @@
 import "./index.scss"
 import React, { Component } from "react"
-import { Row, Col, Button, Icon, Table, Collapse } from "antd"
+import { Row, Col, Button, Icon, Table, Collapse, Timeline } from "antd"
 import Header from "Components/header"
 import Utils from "Common/utils"
 const Panel = Collapse.Panel
@@ -27,33 +27,38 @@ class JavascriptErrorDetail extends Component {
       { title: "错误信息", dataIndex: "errorMessage", key: "errorMessage"},
       { title: "页面", dataIndex: "simpleUrl", key: "simpleUrl" },
       { title: "设备", dataIndex: "deviceName", key: "deviceName" },
-      { title: "浏览器信息", dataIndex: "browserName", key: "browserName" },
+      { title: "浏览器信息", dataIndex: "browserInfo", key: "browserInfo" },
       { title: <label>发生时间  <Icon type="arrow-down" /></label>, width: 200, dataIndex: "happenTime", key: "happenTime", fixed: "right"},
       {
         title: "操作",
         key: "operation",
         fixed: "right",
         width: 100,
-        render: () => <a href="#">详情</a>,
+        render: (text, detail, index) => {
+          return <a onClick={this.showErrorDetail.bind(this, text, detail, index)}>查看详情</a>
+        },
       },
     ]
     const ipIcon = <Icon type="cloud" className="ip-address-icon" />
-    const browserIcon = <Icon type="ie" />
+    const browserIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/browser.png")}/>
     let osIcon = null
-    const deviceIcon = <Icon type="mobile" />
-    if (errorDetail.os === "Android") {
+    let deviceIcon = <Icon type="mobile" />
+    if (errorDetail.os === "android") {
       osIcon = <Icon type="android" />
-    } else if (errorDetail.os === "IOS") {
+    } else if (errorDetail.os === "ios") {
       osIcon = <Icon type="apple" />
     } else if (errorDetail.os === "web") {
-      osIcon = <Icon type="desktop" />
+      osIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/pc.png")}/>
+    }
+    if (errorDetail.deviceName && errorDetail.deviceName.indexOf("iphone") !== -1) {
+      deviceIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/iphone.png")}/>
     }
 
     const data = []
     const len = errorList.length > 100 ? 100 : errorList.length
     for (let i = 0; i < len; i ++) {
       const error = this.analysisError(errorList[i])
-      const result = Object.assign({}, error)
+      const result = Object.assign({}, {key: Math.random()}, error)
       data.push(result)
     }
 
@@ -61,14 +66,14 @@ class JavascriptErrorDetail extends Component {
       <Header/>
       <Row className="detail-container">
         <Col span={16}>
-          <span className="error-type">{errorDetail.errorType}</span><span className="error-url">{errorDetail.titleDetail}</span>
-          <span className="error-msg"><label /><label>{errorDetail.errorMessage}</label> <label>{errorDetail.happenTime}</label></span>
+          <span className="error-type">{errorDetail.errorType}</span><span className="error-url">{errorDetail.titleDetail || "..."}</span>
+          <span className="error-msg"><label /><label>{errorDetail.errorMessage || "..."}</label> <label>{errorDetail.happenTime}</label></span>
           <span className="error-page-link"><Icon type="link" /><a target="_blank" href={errorDetail.simpleUrl}>{errorDetail.simpleUrl || "..."}</a></span>
         </Col>
         <Col span={8}>
           <div className="info-box">
             <span>发生次数</span>
-            <span>{errorList.length}</span>
+            <span>{errorList.length > 200 ? "200+" : errorList.length}</span>
           </div>
           <div className="info-box">
             <span>影响用户</span>
@@ -113,8 +118,24 @@ class JavascriptErrorDetail extends Component {
           </div>
         </Col>
       </Row>
+      <Row className="footprint-container">
+        <Collapse bordered={false}>
+          <Panel header="足迹(demo)" key="1">
+            <Timeline>
+              <Timeline.Item color="green">进入页面 /omega/home</Timeline.Item>
+              <Timeline.Item color="green">点击了按钮 下一步</Timeline.Item>
+              <Timeline.Item color="red">
+                <p>发生了一个错误  Toast is not defined</p>
+              </Timeline.Item>
+              <Timeline.Item>
+                <p>进入页面 /omega/openAccount</p>
+              </Timeline.Item>
+            </Timeline>
+          </Panel>
+        </Collapse>
+      </Row>
       <Row className="stack-container">
-        <h3>Js错误堆栈</h3>
+        <h4>Js错误堆栈</h4>
         <span className="error-msg">{ errorDetail.errorMessage }</span>
         <Collapse defaultActiveKey={["1"]} onChange={this.callback}>
           {
@@ -127,8 +148,7 @@ class JavascriptErrorDetail extends Component {
         </Collapse>
       </Row>
       <Row className="table-container">
-        <h3>Js错误列表</h3>
-        <Table columns={columns} dataSource={data} scroll={{ x: 1300 }} />
+        <Table columns= {columns} dataSource={data} scroll={{ x: 2300 }} />
       </Row>
     </div>
   }
@@ -146,6 +166,7 @@ class JavascriptErrorDetail extends Component {
     const monitorIp = error.monitorIp
     const browserName = error.browserName
     const browserVersion = error.browserVersion
+    const browserInfo = error.browserInfo
     const os = error.os.split(" ")[0]
     const osVersion = error.os.split(" ")[1]
     const deviceName = error.deviceName
@@ -160,6 +181,7 @@ class JavascriptErrorDetail extends Component {
       monitorIp,
       browserName,
       browserVersion,
+      browserInfo,
       os,
       osVersion,
       deviceName,
@@ -168,7 +190,7 @@ class JavascriptErrorDetail extends Component {
     }
   }
   getTheLocationOfError(jsPathArray) {
-    if (!jsPathArray.length) return
+    if (!jsPathArray || !jsPathArray.length) return
     const stackList = []
     for (let i = 0; i < jsPathArray.length; i ++) {
       const jsPathStr = jsPathArray[i].replace(/[()]/g, "")
@@ -186,6 +208,12 @@ class JavascriptErrorDetail extends Component {
     this.props.getJavascriptErrorStackCodeAction({stackList}, (data) => {
       this.props.updateJavascriptErrorDetailState({errorStackList: data})
     })
+  }
+  showErrorDetail(text, detail, index) {
+    const errorIndex = index
+    const errorDetail = detail
+    document.documentElement.scrollTop = 0
+    this.props.updateJavascriptErrorDetailState({text, errorIndex, errorDetail})
   }
 }
 

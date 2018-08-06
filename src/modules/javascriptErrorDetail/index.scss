@@ -82,6 +82,10 @@
         }
         .operation-container {
             margin-top: 10px;
+            .ant-btn {
+                font-size: 12px;
+                height: 24px;
+            }
             .ant-btn span {
                 float: right;
             }
@@ -119,6 +123,10 @@
                 font-weight: bold;
             }
         }
+        .browser-icon {
+            width: 50px;
+            float: left;
+        }
     }
     .ant-row {
         padding: 10px 20px 20px 20px;
@@ -126,12 +134,26 @@
     }
     .table-container {
         padding: 20px;
+        h4 {
+            color: #727082;
+        }
+        .ant-table-thead {
+            font-size: 12px;
+            color: #727082;
+        }
         .ant-table-thead > tr > th {
             background: #f9fafd;
+        }
+        .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+            font-size: 12px;
+            color: #727082;
         }
     }
     .stack-container {
         padding: 20px;
+        h4 {
+            color: #727082;
+        }
         .error-msg {
             display: block;
             margin: 10px 0;
@@ -150,6 +172,24 @@
         }
         .ant-collapse > .ant-collapse-item {
             border-bottom: 0;
+        }
+    }
+    .footprint-container {
+        padding-left: 5px;
+        padding-bottom: 10px;
+        .ant-timeline-item {
+            font-size: 12px;
+            padding-bottom: 0;
+        }
+        .ant-timeline-item-content {
+            padding: 5px 0;
+        }
+        .ant-collapse-item {
+            border-bottom: 0;
+        }
+        .ant-collapse-header {
+            color: #727082;
+            font-weight: bold;
         }
     }
 }
