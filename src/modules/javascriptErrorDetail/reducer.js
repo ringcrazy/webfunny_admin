@@ -3,7 +3,8 @@ import { handleActions } from "redux-actions"
 const initialState = {
   errorIndex: 0,
   errorDetail: {},
-  errorList: []
+  errorList: [],
+  errorStackList: []
 }
 
 export default handleActions({

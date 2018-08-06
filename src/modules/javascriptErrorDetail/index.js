@@ -1,8 +1,10 @@
 import "./index.scss"
 import React, { Component } from "react"
-import { Row, Col, Button, Icon, Table } from "antd"
+import { Row, Col, Button, Icon, Table, Collapse } from "antd"
 import Header from "Components/header"
 import Utils from "Common/utils"
+const Panel = Collapse.Panel
+
 class JavascriptErrorDetail extends Component {
   constructor(props) {
     super(props)
@@ -11,16 +13,16 @@ class JavascriptErrorDetail extends Component {
 
   componentDidMount() {
     const { errorMsg } = Utils.parseQs()
-    this.props.getJavascriptErrorListByMsgAction({errorMsg}, (data) => {
+    this.props.getJavascriptErrorListByMsgAction({errorMsg: encodeURIComponent(errorMsg)}, (data) => {
       const { errorIndex } = this.props
       const errorList = data
-      console.log(errorList)
       const errorDetail = this.analysisError(errorList[errorIndex])
+      this.getTheLocationOfError(errorDetail.jsPathArray)
       this.props.updateJavascriptErrorDetailState({errorList, errorDetail})
     })
   }
   render() {
-    const { errorDetail, errorList } = this.props
+    const { errorDetail, errorList, errorStackList } = this.props
     const columns = [
       { title: "错误信息", dataIndex: "errorMessage", key: "errorMessage"},
       { title: "页面", dataIndex: "simpleUrl", key: "simpleUrl" },
@@ -47,13 +49,14 @@ class JavascriptErrorDetail extends Component {
       osIcon = <Icon type="desktop" />
     }
 
-
     const data = []
-    for (let i = 0; i < errorList.length; i ++) {
+    const len = errorList.length > 100 ? 100 : errorList.length
+    for (let i = 0; i < len; i ++) {
       const error = this.analysisError(errorList[i])
       const result = Object.assign({}, error)
       data.push(result)
     }
+
     return <div className="javascriptErrorDetail-container">
       <Header/>
       <Row className="detail-container">
@@ -65,7 +68,7 @@ class JavascriptErrorDetail extends Component {
         <Col span={8}>
           <div className="info-box">
             <span>发生次数</span>
-            <span>190</span>
+            <span>{errorList.length}</span>
           </div>
           <div className="info-box">
             <span>影响用户</span>
@@ -110,14 +113,27 @@ class JavascriptErrorDetail extends Component {
           </div>
         </Col>
       </Row>
-      <Row className="table-container">
-        足迹
+      <Row className="stack-container">
+        <h3>Js错误堆栈</h3>
+        <span className="error-msg">{ errorDetail.errorMessage }</span>
+        <Collapse defaultActiveKey={["1"]} onChange={this.callback}>
+          {
+            errorStackList.map((stack, index) => {
+              return <Panel header={stack.jsPathStr} key={index + 1}>
+                <p>{decodeURIComponent(stack.code)}</p>
+              </Panel>
+            })
+          }
+        </Collapse>
       </Row>
-
       <Row className="table-container">
+        <h3>Js错误列表</h3>
         <Table columns={columns} dataSource={data} scroll={{ x: 1300 }} />
       </Row>
     </div>
+  }
+  callback(key) {
+    console.log(key)
   }
 
   analysisError(error) {
@@ -149,6 +165,26 @@ class JavascriptErrorDetail extends Component {
       jsPathArray,
       titleDetail
     }
+  }
+  getTheLocationOfError(jsPathArray) {
+    if (!jsPathArray.length) return
+    const stackList = []
+    for (let i = 0; i < jsPathArray.length; i ++) {
+      const jsPathStr = jsPathArray[i].replace(/[()]/g, "")
+      const strArr = jsPathStr.split(":")
+      const jsPath = jsPathStr.match(/https?:\/\/\S*.js/g)[0]
+      const locationX = strArr[strArr.length - 2]
+      const locationY = strArr[strArr.length - 1]
+      stackList.push({
+        jsPathStr,
+        jsPath,
+        locationX,
+        locationY
+      })
+    }
+    this.props.getJavascriptErrorStackCodeAction({stackList}, (data) => {
+      this.props.updateJavascriptErrorDetailState({errorStackList: data})
+    })
   }
 }
 

@@ -17,7 +17,9 @@ const api = {
   // errorMsg 获取js错误列表
   "getJavascriptErrorListByMsg": apiHost + "/api/v1/getJavascriptErrorListByMsg",
   // 获取js错误详情
-  getJavascriptErrorDetail: id => apiHost + "/api/v1/javascriptErrorInfo/" + id,
+  "getJavascriptErrorDetail": id => apiHost + "/api/v1/javascriptErrorInfo/" + id,
+  // 获取js错误对应的code
+  "getJavascriptErrorStackCode": apiHost + "/api/v1/getJavascriptErrorStackCode",
 
 }
 
