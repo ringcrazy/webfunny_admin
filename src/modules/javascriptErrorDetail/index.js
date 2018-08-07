@@ -40,7 +40,7 @@ class JavascriptErrorDetail extends Component {
       },
     ]
     const ipIcon = <Icon type="cloud" className="ip-address-icon" />
-    const browserIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/browser.png")}/>
+    const browserIcon = <img className="browser-icon" src="../src/assets/img/javascriptErrorDetail/browser.png"/>
     let osIcon = null
     let deviceIcon = <Icon type="mobile" />
     if (errorDetail.os === "android") {
@@ -73,7 +73,7 @@ class JavascriptErrorDetail extends Component {
         <Col span={8}>
           <div className="info-box">
             <span>发生次数</span>
-            <span>{errorList.length > 200 ? "200+" : errorList.length}</span>
+            <span>{errorList.length >= 200 ? "200+" : errorList.length}</span>
           </div>
           <div className="info-box">
             <span>影响用户</span>
@@ -81,11 +81,11 @@ class JavascriptErrorDetail extends Component {
           </div>
         </Col>
         <Col span={16} className="operation-container">
-          <Button>已解决<Icon type="check-circle-o" /></Button>
-          <Button>忽略<Icon type="minus-circle-o" /></Button>
+          <Button disabled>已解决<Icon type="check-circle-o" /></Button>
+          <Button disabled>忽略<Icon type="minus-circle-o" /></Button>
           <Button>删除<Icon type="delete" /></Button>
           <Button>上一个<Icon type="step-backward" /></Button>
-          <Button>下一个<Icon type="step-forward" /></Button>
+          <Button onClick={this.turnToNext.bind(this)}>下一个<Icon type="step-forward" /></Button>
         </Col>
       </Row>
       <Row className="device-container">
@@ -145,6 +145,9 @@ class JavascriptErrorDetail extends Component {
               </Panel>
             })
           }
+          <Panel header="堆栈明细" key={errorStackList.length + 1}>
+            <p>{ errorDetail.errorStack }</p>
+          </Panel>
         </Collapse>
       </Row>
       <Row className="table-container">
@@ -155,12 +158,16 @@ class JavascriptErrorDetail extends Component {
   callback(key) {
     console.log(key)
   }
+  turnToNext() {
+    // const { errorIndex } = this.props
+  }
 
   analysisError(error) {
     if (!error) return {}
     const errMsgArr = error.errorMessage.split(": ")
     const errorType = errMsgArr[0]
     const errorMessage = errMsgArr[errMsgArr.length - 1]
+    const errorStack = error.errorStack
     const happenTime = new Date(parseInt(error.happenTime, 10)).Format("yyyy-MM-dd hh:mm:ss")
     const simpleUrl = error.simpleUrl
     const monitorIp = error.monitorIp
@@ -176,6 +183,7 @@ class JavascriptErrorDetail extends Component {
     return {
       errorType,
       errorMessage,
+      errorStack,
       happenTime,
       simpleUrl,
       monitorIp,
@@ -189,8 +197,11 @@ class JavascriptErrorDetail extends Component {
       titleDetail
     }
   }
-  getTheLocationOfError(jsPathArray) {
-    if (!jsPathArray || !jsPathArray.length) return
+  getTheLocationOfError(tempJsPathArray) {
+    let jsPathArray = tempJsPathArray
+    if (!jsPathArray || !jsPathArray.length) {
+      jsPathArray = []
+    }
     const stackList = []
     for (let i = 0; i < jsPathArray.length; i ++) {
       const jsPathStr = jsPathArray[i].replace(/[()]/g, "")

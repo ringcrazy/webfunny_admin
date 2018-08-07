@@ -28,6 +28,9 @@ export default class Header extends Component {
             </a>
           </Dropdown>
         </div>
+        <a href="https://github.com/a597873885/webfunny_admin.git" target="_blank" className="github-box">
+          <Icon type="github" />
+        </a>
       </section>
     </div>
   }
