@@ -12,8 +12,11 @@
     
     这是一个运用于前端监控系统的项目，我在知乎上对其作用做了介绍。
     
-知乎讲解：
-    https://zhuanlan.zhihu.com/p/35771536
+线上Demo:
+    https://www.webfunny.cn/webfunny/javascriptError
+    
+博客讲解：
+    https://www.cnblogs.com/warm-stranger/p/9417084.html
 
 如何运行:
 
