@@ -46,9 +46,6 @@ class JavascriptError extends Component {
       const androidPercent = (androidError * 100 / androidPv).toFixed(2)
       this.props.updateJavascriptErrorState({totalPercent, pcPercent, iosPercent, androidPercent})
     })
-    // setInterval(function () {
-    //   a = b + c
-    // }, 5000)
   }
 
   render() {

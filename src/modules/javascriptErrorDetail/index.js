@@ -40,18 +40,20 @@ class JavascriptErrorDetail extends Component {
       },
     ]
     const ipIcon = <Icon type="cloud" className="ip-address-icon" />
-    const browserIcon = <img className="browser-icon" src="../src/assets/img/javascriptErrorDetail/browser.png"/>
+    const browserIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/browser.png")}/>
     let osIcon = null
     let deviceIcon = <Icon type="mobile" />
     if (errorDetail.os === "android") {
       osIcon = <Icon type="android" />
-    } else if (errorDetail.os === "ios") {
+    } else if (errorDetail.os === "ios" || errorDetail.os === "Mac") {
       osIcon = <Icon type="apple" />
-    } else if (errorDetail.os === "web") {
-      osIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/pc.png")}/>
+    } else if (errorDetail.os === "Windows") {
+      osIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/windows.png")}/>
     }
     if (errorDetail.deviceName && errorDetail.deviceName.indexOf("iphone") !== -1) {
       deviceIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/iphone.png")}/>
+    } else if (errorDetail.deviceName && errorDetail.deviceName.indexOf("PC") !== -1) {
+      deviceIcon = <img className="browser-icon" src={require("Images/javascriptErrorDetail/pc.png")}/>
     }
 
     const data = []
@@ -83,7 +85,7 @@ class JavascriptErrorDetail extends Component {
         <Col span={16} className="operation-container">
           <Button disabled>已解决<Icon type="check-circle-o" /></Button>
           <Button disabled>忽略<Icon type="minus-circle-o" /></Button>
-          <Button>删除<Icon type="delete" /></Button>
+          <Button disabled>删除<Icon type="delete" /></Button>
           <Button>上一个<Icon type="step-backward" /></Button>
           <Button onClick={this.turnToNext.bind(this)}>下一个<Icon type="step-forward" /></Button>
         </Col>
@@ -159,7 +161,11 @@ class JavascriptErrorDetail extends Component {
     console.log(key)
   }
   turnToNext() {
-    // const { errorIndex } = this.props
+    const { errorList, errorIndex } = this.props
+    if (errorList.length >= errorIndex + 1) {
+      const errorDetail = this.analysisError(errorList[errorIndex + 1])
+      this.props.updateJavascriptErrorDetailState({errorDetail, errorIndex: errorIndex + 1})
+    }
   }
 
   analysisError(error) {
@@ -171,15 +177,59 @@ class JavascriptErrorDetail extends Component {
     const happenTime = new Date(parseInt(error.happenTime, 10)).Format("yyyy-MM-dd hh:mm:ss")
     const simpleUrl = error.simpleUrl
     const monitorIp = error.monitorIp
-    const browserName = error.browserName
-    const browserVersion = error.browserVersion
+    let browserName = error.browserName
+    let browserVersion = error.browserVersion
     const browserInfo = error.browserInfo
-    const os = error.os.split(" ")[0]
-    const osVersion = error.os.split(" ")[1]
+    let os = error.os.split(" ")[0]
+    let osVersion = error.os.split(" ")[1]
     const deviceName = error.deviceName
     const jsPathArray = error.errorStack.match(/\([(http)?:]?[\S]*\d+\)/g)
     const tempArr = jsPathArray ? jsPathArray[0].split("/") : []
     const titleDetail = tempArr.length ? tempArr[tempArr.length - 1] : ""
+
+    let browserArr = [], osVersionArr = []
+    if (os === "web") {
+      if (/Mac OS/i.test(browserInfo)) {
+        os = "Mac"
+        osVersionArr = browserInfo.match(/Mac OS X [0-9_]+/g)
+        osVersionArr = osVersionArr[0].split(" ")
+        osVersion = osVersionArr[osVersionArr.length - 1]
+      } else if (/Windows/i.test(browserInfo)) {
+        os = "Windows"
+        osVersionArr = browserInfo.match(/Windows NT [0-9.]+/g)
+        osVersionArr = osVersionArr[0].split(" ")
+        osVersion = osVersionArr[osVersionArr.length - 1]
+      }
+    } else {
+      if (/MicroMessenger/i.test(browserInfo)) {
+        browserName = "MicroMessenger(微信)"
+        browserArr = browserInfo.match(/MicroMessenger\/[0-9\.]+/g)
+        browserVersion = browserArr.length ? browserArr[0].split("/")[1] : "..."
+      } else if (/MQQBrowser/i.test(browserInfo)) {
+        browserName = "MQQBrowser"
+        browserArr = browserInfo.match(/MQQBrowser\/[0-9\.]+/g)
+        browserVersion = browserArr.length ? browserArr[0].split("/")[1] : "..."
+      } else if (/UCBrowser/i.test(browserInfo)) {
+        browserName = "UCBrowser"
+        browserArr = browserInfo.match(/UCBrowser\/[0-9\.]+/g)
+        browserVersion = browserArr.length ? browserArr[0].split("/")[1] : "..."
+      } else if (/QihooBrowser/i.test(browserInfo)) {
+        browserName = "QihooBrowser"
+        browserArr = browserInfo.match(/QihooBrowser\/[0-9\.]+/g)
+        browserVersion = browserArr.length ? browserArr[0].split("/")[1] : "..."
+      } else if (/CriOS/i.test(browserInfo)) {
+        browserName = "CriOS(谷歌)"
+        browserArr = browserInfo.match(/CriOS\/[0-9\.]+/g)
+        browserVersion = browserArr.length ? browserArr[0].split("/")[1] : "..."
+      } else if (/DingTalk/i.test(browserInfo)) {
+        browserName = "DingTalk"
+        browserArr = browserInfo.match(/DingTalk\/[0-9\.]+/g)
+        browserVersion = browserArr.length ? browserArr[0].split("/")[1] : "..."
+      } else {
+        browserName = "Mobile UI WebView"
+      }
+    }
+
     return {
       errorType,
       errorMessage,
