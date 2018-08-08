@@ -10,9 +10,14 @@ export const getJsErrorCountByDayAction = (handleResult) => () => {
     handleResult(response)
   })
 }
+export const getJsErrorCountByPageAction = (handleResult) => () => {
+  return HttpUtil.get(HttpApi.getJavascriptErrorListByPage).then( response => {
+    handleResult(response.data)
+  })
+}
 
-export const getJsErrorSortAction = (handleResult) => () => {
-  return HttpUtil.get(HttpApi.getJsErrorSort).then( response => {
+export const getJsErrorSortAction = (param, handleResult) => () => {
+  return HttpUtil.post(HttpApi.getJsErrorSort, param).then( response => {
     handleResult(response)
   })
 }

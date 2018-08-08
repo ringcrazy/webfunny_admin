@@ -20,6 +20,8 @@ const api = {
   "getJavascriptErrorDetail": id => apiHost + "/api/v1/javascriptErrorInfo/" + id,
   // 获取js错误对应的code
   "getJavascriptErrorStackCode": apiHost + "/api/v1/getJavascriptErrorStackCode",
+  // 根据页面每天JS的错误量
+  "getJavascriptErrorListByPage": apiHost + "/api/v1/getJavascriptErrorListByPage",
 
 }
 

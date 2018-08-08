@@ -93,5 +93,36 @@
     .ant-card-body {
         padding: 0;
     }
-
+    .page-container {
+        padding-top: 5px;
+        padding-right: 10px;
+        .url-box {
+            margin-bottom: 0;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-weight: bold;
+            background: url("../../assets/img/javascriptErrorDetail/url-bg.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            width: 90%;
+            margin-left: 5%;
+            cursor: pointer;
+            span {
+                float: left;
+            }
+            span:first-child {
+                width: 80%;
+                display: block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+    .page-error-container {
+        padding-top: 5px;
+        padding-left: 10px;
+    }
 }

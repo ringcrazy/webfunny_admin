@@ -2,6 +2,9 @@ import { handleActions } from "redux-actions"
 
 const initialState = {
   jsErrorList: [],
+  jsErrorListByPage: [],
+  pageErrorList: [],
+  maxPageErrorCount: 0,
   totalPercent: "0%",
   pcPercent: "0%",
   iosPercent: "0%",

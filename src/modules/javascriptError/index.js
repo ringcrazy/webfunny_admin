@@ -1,7 +1,7 @@
 import "./index.scss"
 import React, { Component } from "react"
 import Header from "Components/header"
-import { Row, Col, Tabs, Card, Icon } from "antd"
+import { Row, Col, Tabs, Card, Icon, Tooltip } from "antd"
 import { jsErrorOption } from "ChartConfig/jsChartOption"
 const TabPane = Tabs.TabPane
 const echarts = require("echarts")
@@ -25,7 +25,7 @@ class JavascriptError extends Component {
     })
 
     // 获取js错误列表
-    this.props.getJsErrorSortAction((result) => {
+    this.props.getJsErrorSortAction({}, (result) => {
       this.props.updateJavascriptErrorState({jsErrorList: result.data})
     })
 
@@ -49,7 +49,7 @@ class JavascriptError extends Component {
   }
 
   render() {
-    const { jsErrorList, totalPercent, pcPercent, iosPercent, androidPercent } = this.props
+    const { jsErrorList, jsErrorListByPage, pageErrorList, maxPageErrorCount, totalPercent, pcPercent, iosPercent, androidPercent } = this.props
     return <div className="javascriptError-container">
       <Header/>
       <Row>
@@ -58,11 +58,6 @@ class JavascriptError extends Component {
             <Tabs defaultActiveKey="1" >
               <TabPane tab={<span><Icon type="area-chart" />月统计</span>} key="1">
                 <div id="jsErrorCountByDay" className="chart-box" />
-              </TabPane>
-              <TabPane tab={<span><Icon type="clock-circle" />实时统计</span>} key="2">
-                <div id="jsErrorCountByHour" className="chart-box" >
-                  即将完善
-                </div>
               </TabPane>
             </Tabs>
           </Col>
@@ -92,7 +87,7 @@ class JavascriptError extends Component {
 
       </Row>
       <Row>
-        <Tabs defaultActiveKey="1" >
+        <Tabs defaultActiveKey="1" onTabClick={this.onPageError.bind(this)}>
           <TabPane tab={<span><Icon type="tags-o" />错误列表</span>} key="1">
             <Card className="error-list-container">
               {
@@ -105,14 +100,51 @@ class JavascriptError extends Component {
             </Card>
           </TabPane>
           <TabPane tab={<span><Icon type="switcher" />错误页面</span>} key="2">
-            <div id="jsErrorByPage" className="chart-box" >
-              即将完善
-            </div>
+            <Col span={8} className="page-container">
+              <Card style={{ width: "100%" }}>
+                {
+                  pageErrorList.map((page) => {
+                    const percent = page.count * 100 / maxPageErrorCount + "%"
+                    return <Tooltip title={page.simpleUrl} placement="right">
+                        <p className="url-box" style={{ backgroundSize: percent + " 100%" }} onClick={this.getJsErrorListByPage.bind(this, page.simpleUrl)}>
+                          <span>{page.simpleUrl}</span><span>({page.count}次)</span>
+                        </p>
+                      </Tooltip>
+                  })
+                }
+              </Card>
+            </Col>
+            <Col span={16} className="page-error-container">
+              <Card className="error-list-container">
+                {
+                  jsErrorListByPage.map((error, index) => {
+                    const msgArr = error.errorMessage.split(": ")
+                    const len = msgArr.length
+                    return <p key={index} onClick={this.turnToDetail.bind(this, error)}><span className="status-icon"/><span>{msgArr[0] || "空"}</span><span>{msgArr[len - 1] || "..."}</span><span>({error.count}次)</span><Icon className="click-export" type="export" /><span><i>最近：</i>2018.11.11</span></p>
+                  })
+                }
+              </Card>
+            </Col>
           </TabPane>
         </Tabs>
 
       </Row>
     </div>
+  }
+  onPageError(key) {
+    if (key === "2") {
+      this.props.getJsErrorCountByPageAction((res) => {
+        this.props.getJsErrorSortAction({simpleUrl: res[0].simpleUrl}, (result) => {
+          const maxPageErrorCount = parseInt(res[0].count, 10)
+          this.props.updateJavascriptErrorState({jsErrorListByPage: result.data, maxPageErrorCount, pageErrorList: res})
+        })
+      })
+    }
+  }
+  getJsErrorListByPage(simpleUrl) {
+    this.props.getJsErrorSortAction({simpleUrl}, (result) => {
+      this.props.updateJavascriptErrorState({jsErrorListByPage: result.data})
+    })
   }
   turnToDetail(error) {
     this.props.history.push("javascriptErrorDetail?errorMsg=" + error.errorMessage)

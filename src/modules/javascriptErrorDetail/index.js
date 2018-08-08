@@ -86,7 +86,7 @@ class JavascriptErrorDetail extends Component {
           <Button disabled>已解决<Icon type="check-circle-o" /></Button>
           <Button disabled>忽略<Icon type="minus-circle-o" /></Button>
           <Button disabled>删除<Icon type="delete" /></Button>
-          <Button>上一个<Icon type="step-backward" /></Button>
+          <Button onClick={this.turnToPrev.bind(this)}>上一个<Icon type="step-backward" /></Button>
           <Button onClick={this.turnToNext.bind(this)}>下一个<Icon type="step-forward" /></Button>
         </Col>
       </Row>
@@ -120,22 +120,24 @@ class JavascriptErrorDetail extends Component {
           </div>
         </Col>
       </Row>
-      <Row className="footprint-container">
-        <Collapse bordered={false}>
-          <Panel header="足迹(demo)" key="1">
-            <Timeline>
-              <Timeline.Item color="green">进入页面 /omega/home</Timeline.Item>
-              <Timeline.Item color="green">点击了按钮 下一步</Timeline.Item>
-              <Timeline.Item color="red">
-                <p>发生了一个错误  Toast is not defined</p>
-              </Timeline.Item>
-              <Timeline.Item>
-                <p>进入页面 /omega/openAccount</p>
-              </Timeline.Item>
-            </Timeline>
-          </Panel>
-        </Collapse>
-      </Row>
+      {
+        false && <Row className="footprint-container">
+          <Collapse bordered={false}>
+            <Panel header="足迹(demo)" key="1">
+              <Timeline>
+                <Timeline.Item color="green">进入页面 /omega/home</Timeline.Item>
+                <Timeline.Item color="green">点击了按钮 下一步</Timeline.Item>
+                <Timeline.Item color="red">
+                  <p>发生了一个错误 Toast is not defined</p>
+                </Timeline.Item>
+                <Timeline.Item>
+                  <p>进入页面 /omega/openAccount</p>
+                </Timeline.Item>
+              </Timeline>
+            </Panel>
+          </Collapse>
+        </Row>
+      }
       <Row className="stack-container">
         <h4>Js错误堆栈</h4>
         <span className="error-msg">{ errorDetail.errorMessage }</span>
@@ -159,6 +161,12 @@ class JavascriptErrorDetail extends Component {
   }
   callback(key) {
     console.log(key)
+  }
+  turnToPrev() {
+    const { errorList, errorIndex } = this.props
+    const tempIndex = errorIndex > 0 ? errorIndex - 1 : 0
+    const errorDetail = this.analysisError(errorList[tempIndex])
+    this.props.updateJavascriptErrorDetailState({errorDetail, errorIndex: tempIndex})
   }
   turnToNext() {
     const { errorList, errorIndex } = this.props
