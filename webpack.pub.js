@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const Merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const CleanPlugin = require("clean-webpack-plugin");
 const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
@@ -17,11 +18,12 @@ module.exports = env => {
     entry: {
       app: path.resolve(__dirname, 'src/index.js'),
       vendor: [
-        'classnames', 'moment', 'prop-types',
-        'react', 'react-dom', 'react-redux', 'react-router-dom', 'react-router-redux',
-        'react-time', 'react-transition-group', 'redux', 'redux-actions','redux-logger', 'redux-thunk',
-        'antd/lib/card', 'antd/lib/dropdown', 'antd/lib/row', 'antd/lib/col', 'antd/lib/tabs', 'antd/lib/menu',
-        'antd/lib/icon', 'antd/lib/pagination'
+        'react-redux',
+        // 'react'
+        // , 'react-dom', 'react-redux', 'react-router-dom', 'react-router-redux'
+        // ,'react-transition-group', 'redux', 'redux-actions','redux-logger', 'redux-thunk'
+        // ,'antd/lib/card', 'antd/lib/dropdown', 'antd/lib/row', 'antd/lib/col', 'antd/lib/tabs', 'antd/lib/menu'
+        // ,'antd/lib/icon', 'antd/lib/pagination'
       ],
       // common: [
       //   'prius','zepto-webpack',
@@ -36,6 +38,7 @@ module.exports = env => {
       publicPath: assetsUrl
     },
     plugins: [
+      new LodashModuleReplacementPlugin,
       new CleanPlugin(['dist']),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production'),

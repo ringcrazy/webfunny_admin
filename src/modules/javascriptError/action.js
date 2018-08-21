@@ -5,13 +5,18 @@ export const updateJavascriptErrorState = createAction("updateJavascriptErrorSta
 
 export const clearJavascriptErrorState = createAction("clearJavascriptErrorState")
 
-export const getJsErrorCountByDayAction = (handleResult) => () => {
-  return HttpUtil.get(HttpApi.getJsErrorCountByDay).then( response => {
+export const getJsErrorCountByDayAction = (param, handleResult) => () => {
+  return HttpUtil.get(HttpApi.getJsErrorCountByDay, param).then( response => {
     handleResult(response)
   })
 }
-export const getJsErrorCountByPageAction = (handleResult) => () => {
-  return HttpUtil.get(HttpApi.getJavascriptErrorListByPage).then( response => {
+export const getJsErrorCountByHourAction = (handleResult) => () => {
+  return HttpUtil.get(HttpApi.getJsErrorCountByHour).then( response => {
+    handleResult(response)
+  })
+}
+export const getJsErrorCountByPageAction = (param, handleResult) => () => {
+  return HttpUtil.get(HttpApi.getJavascriptErrorListByPage, param).then( response => {
     handleResult(response.data)
   })
 }

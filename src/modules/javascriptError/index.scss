@@ -6,7 +6,11 @@
     min-height: 100%;
     padding-top: 62px;
     background: #fff;
-
+    .ant-tabs-nav .ant-tabs-tab {
+        .anticon {
+            font-weight: bold;
+        }
+    }
     .ant-tabs-nav .ant-tabs-tab-active {
         color: #5d5cb6;
     }
@@ -31,6 +35,7 @@
             }
             .anticon {
                 color: #727082;
+                font-weight: bold;
             }
         }
     }

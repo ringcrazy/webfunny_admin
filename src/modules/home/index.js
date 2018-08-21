@@ -34,6 +34,6 @@ export default class Home extends Component {
     </div>
   }
   turnToJsError() {
-    this.props.history.push("javascriptError")
+    this.props.history.push("projectList")
   }
 }

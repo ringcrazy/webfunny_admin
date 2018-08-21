@@ -121,7 +121,7 @@ class JavascriptErrorDetail extends Component {
         </Col>
       </Row>
       {
-        false && <Row className="footprint-container">
+        <Row className="footprint-container">
           <Collapse bordered={false}>
             <Panel header="足迹(demo)" key="1">
               <Timeline>

@@ -1,6 +1,7 @@
 import { handleActions } from "redux-actions"
 
 const initialState = {
+  timeType: "month",
   jsErrorList: [],
   jsErrorListByPage: [],
   pageErrorList: [],
@@ -8,7 +9,9 @@ const initialState = {
   totalPercent: "0%",
   pcPercent: "0%",
   iosPercent: "0%",
-  androidPercent: "0%"
+  androidPercent: "0%",
+  activeKeyTop: "1",
+  activeKeyDown: "1"
 }
 
 export default handleActions({

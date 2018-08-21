@@ -2,62 +2,42 @@ import "./index.scss"
 import React, { Component } from "react"
 import Header from "Components/header"
 import { Row, Col, Tabs, Card, Icon, Tooltip } from "antd"
-import { jsErrorOption } from "ChartConfig/jsChartOption"
+import { jsErrorOption, jsErrorOptionByHour } from "ChartConfig/jsChartOption"
 const TabPane = Tabs.TabPane
 const echarts = require("echarts")
 class JavascriptError extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      jsErrorCountByDayChart: null
+    }
+    this.initData = this.initData.bind(this)
+    this.loadInitData = this.loadInitData.bind(this)
   }
 
   componentDidMount() {
-    // 基于准备好的dom，初始化echarts实例
-    const myChart = echarts.init(document.getElementById("jsErrorCountByDay"))
-    // 绘制图表
-    this.props.getJsErrorCountByDayAction((result) => {
-      const data = result.data
-      const dateArray = [], jsErrorArray = []
-      for (let i = 0; i < 30; i ++) {
-        dateArray.push(data[i].day)
-        jsErrorArray.push(data[i].count)
-      }
-      myChart.setOption(jsErrorOption([dateArray, jsErrorArray]))
-    })
-
-    // 获取js错误列表
-    this.props.getJsErrorSortAction({}, (result) => {
-      this.props.updateJavascriptErrorState({jsErrorList: result.data})
-    })
-
-    this.props.getJavascriptErrorCountByOsAction((result) => {
-      const pcError = parseInt(result.pcError.count, 10)
-      const iosError = parseInt(result.iosError.count, 10)
-      const androidError = parseInt(result.androidError.count, 10)
-      const pcPv = parseInt(result.pcPv.count, 10)
-      const iosPv = parseInt(result.iosPv.count, 10)
-      const androidPv = parseInt(result.androidPv.count, 10)
-
-      const errorTotal = pcError + iosError + androidError
-      const pvTotal = pcPv + iosPv + androidPv
-
-      const totalPercent = (errorTotal * 100 / pvTotal).toFixed(2)
-      const pcPercent = (pcError * 100 / pcPv).toFixed(2)
-      const iosPercent = (iosError * 100 / iosPv).toFixed(2)
-      const androidPercent = (androidError * 100 / androidPv).toFixed(2)
-      this.props.updateJavascriptErrorState({totalPercent, pcPercent, iosPercent, androidPercent})
-    })
+    this.initData()
   }
 
+  componentWillUnmount() {
+    this.props.clearJavascriptErrorState()
+  }
   render() {
-    const { jsErrorList, jsErrorListByPage, pageErrorList, maxPageErrorCount, totalPercent, pcPercent, iosPercent, androidPercent } = this.props
+    const { jsErrorList, jsErrorListByPage, pageErrorList,
+            maxPageErrorCount, totalPercent, pcPercent,
+            iosPercent, androidPercent, activeKeyTop,
+            activeKeyDown } = this.props
     return <div className="javascriptError-container">
       <Header/>
       <Row>
         <Card className="main-info-container">
           <Col span={16}>
-            <Tabs defaultActiveKey="1" >
+            <Tabs defaultActiveKey="1" activeKey={activeKeyTop} onTabClick={this.onStatistic.bind(this)}>
               <TabPane tab={<span><Icon type="area-chart" />月统计</span>} key="1">
                 <div id="jsErrorCountByDay" className="chart-box" />
+              </TabPane>
+              <TabPane tab={<span><Icon type="clock-circle-o" />实时统计</span>} key="2">
+                <div id="jsErrorCountByHour" className="chart-box" />
               </TabPane>
             </Tabs>
           </Col>
@@ -87,7 +67,7 @@ class JavascriptError extends Component {
 
       </Row>
       <Row>
-        <Tabs defaultActiveKey="1" onTabClick={this.onPageError.bind(this)}>
+        <Tabs defaultActiveKey="1"  activeKey={activeKeyDown} onTabClick={this.onPageError.bind(this)}>
           <TabPane tab={<span><Icon type="tags-o" />错误列表</span>} key="1">
             <Card className="error-list-container">
               {
@@ -105,7 +85,7 @@ class JavascriptError extends Component {
                 {
                   pageErrorList.map((page) => {
                     const percent = page.count * 100 / maxPageErrorCount + "%"
-                    return <Tooltip title={page.simpleUrl} placement="right">
+                    return <Tooltip key={Math.random()} title={page.simpleUrl} placement="right">
                         <p className="url-box" style={{ backgroundSize: percent + " 100%" }} onClick={this.getJsErrorListByPage.bind(this, page.simpleUrl)}>
                           <span>{page.simpleUrl}</span><span>({page.count}次)</span>
                         </p>
@@ -131,23 +111,96 @@ class JavascriptError extends Component {
       </Row>
     </div>
   }
-  onPageError(key) {
+  onStatistic(key) {
+    let timeType = "month"
     if (key === "2") {
-      this.props.getJsErrorCountByPageAction((res) => {
-        this.props.getJsErrorSortAction({simpleUrl: res[0].simpleUrl}, (result) => {
-          const maxPageErrorCount = parseInt(res[0].count, 10)
-          this.props.updateJavascriptErrorState({jsErrorListByPage: result.data, maxPageErrorCount, pageErrorList: res})
-        })
+      timeType = "day"
+      this.props.getJsErrorCountByHourAction((res) => {
+        // 基于准备好的dom，初始化echarts实例
+        const jsErrorChartByHour = echarts.init(document.getElementById("jsErrorCountByHour"))
+        const data = res.data
+        const dateArray = [], jsErrorArray = []
+        for (let i = 0; i < data.length; i ++) {
+          dateArray.push(data[i].day)
+          jsErrorArray.push(data[i].count)
+        }
+        jsErrorChartByHour.setOption(jsErrorOptionByHour([dateArray, jsErrorArray]))
+      })
+      this.loadInitData("day")
+    } else if (key === "1") {
+      timeType = "month"
+      this.loadInitData("month")
+    }
+    this.props.updateJavascriptErrorState({activeKeyTop: key, activeKeyDown: "1", timeType})
+  }
+  onPageError(key) {
+    const { timeType } = this.props
+    this.props.updateJavascriptErrorState({activeKeyDown: key})
+    if (key === "2") {
+      this.props.getJsErrorCountByPageAction({ timeType }, (res) => {
+        if (res.length) {
+          this.props.getJsErrorSortAction({simpleUrl: res[0].simpleUrl}, (result) => {
+            const maxPageErrorCount = parseInt(res[0].count, 10)
+            this.props.updateJavascriptErrorState({jsErrorListByPage: result.data, maxPageErrorCount, pageErrorList: res})
+          })
+        } else {
+          this.props.updateJavascriptErrorState({pageErrorList: []})
+        }
       })
     }
   }
   getJsErrorListByPage(simpleUrl) {
-    this.props.getJsErrorSortAction({simpleUrl}, (result) => {
+    const { timeType } = this.props
+    this.props.getJsErrorSortAction({simpleUrl, timeType}, (result) => {
       this.props.updateJavascriptErrorState({jsErrorListByPage: result.data})
     })
   }
   turnToDetail(error) {
     this.props.history.push("javascriptErrorDetail?errorMsg=" + error.errorMessage)
+  }
+
+  initData() {
+    this.loadInitData()
+
+    // 根据平台获取并计算错误率
+    this.props.getJavascriptErrorCountByOsAction((result) => {
+      const pcError = parseInt(result.pcError.count, 10)
+      const iosError = parseInt(result.iosError.count, 10)
+      const androidError = parseInt(result.androidError.count, 10)
+      const pcPv = parseInt(result.pcPv.count, 10)
+      const iosPv = parseInt(result.iosPv.count, 10)
+      const androidPv = parseInt(result.androidPv.count, 10)
+
+      const errorTotal = pcError + iosError + androidError
+      const pvTotal = pcPv + iosPv + androidPv
+
+      const totalPercent = (errorTotal * 100 / pvTotal).toFixed(2)
+      const pcPercent = (pcError * 100 / pcPv).toFixed(2)
+      const iosPercent = (iosError * 100 / iosPv).toFixed(2)
+      const androidPercent = (androidError * 100 / androidPv).toFixed(2)
+      this.props.updateJavascriptErrorState({totalPercent, pcPercent, iosPercent, androidPercent})
+    })
+  }
+
+  // 加载错误图表数据
+  loadInitData(newTimeType) {
+    const timeType = newTimeType ? newTimeType : this.props.timeType
+    // 基于准备好的dom，初始化echarts实例
+    this.state.jsErrorCountByDayChart = echarts.init(document.getElementById("jsErrorCountByDay"))
+    // 绘制图表
+    this.props.getJsErrorCountByDayAction({ timeType }, (result) => {
+      const data = result.data
+      const dateArray = [], jsErrorArray = []
+      for (let i = 0; i < 30; i ++) {
+        dateArray.push(data[i].day)
+        jsErrorArray.push(data[i].count)
+      }
+      this.state.jsErrorCountByDayChart.setOption(jsErrorOption([dateArray, jsErrorArray]))
+    })
+    // 获取js错误列表
+    this.props.getJsErrorSortAction({ timeType }, (result) => {
+      this.props.updateJavascriptErrorState({jsErrorList: result.data})
+    })
   }
 }
 

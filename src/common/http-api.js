@@ -10,6 +10,8 @@ const api = {
   "userList": apiHost + "/api/v1/user/list",
   // 根据时间查询每天JS的错误量
   "getJsErrorCountByDay": apiHost + "/api/v1/getJavascriptErrorInfoListByDay",
+  // 根据时间查询一天内js错误总量和最近几小时的错误量
+  "getJsErrorCountByHour": apiHost + "/api/v1/getJavascriptErrorInfoListByHour",
   // 根据JS错误量进行排序
   "getJsErrorSort": apiHost + "/api/v1/getJavascriptErrorSort",
   // 根据平台获取JS错误数量
