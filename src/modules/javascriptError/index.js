@@ -77,7 +77,7 @@ class JavascriptError extends Component {
                 jsErrorList.map((error, index) => {
                   const msgArr = error.errorMessage.split(": ")
                   const len = msgArr.length
-                  return <p key={index} onClick={this.turnToDetail.bind(this, error)}><span className="status-icon"/><span>{msgArr[0] || "空"}</span><span>{msgArr[len - 1] || "..."}</span><span>({error.count}次)</span><Icon className="click-export" type="export" /><span><i>最近：</i>2018.11.11</span></p>
+                  return <p key={index} onClick={this.turnToDetail.bind(this, error)}><span className="status-icon"/><span>{msgArr[0] || "空"}</span><span>{msgArr[len - 1] || "..."}</span><span>({error.count}次)</span><Icon className="click-export" type="export" /><span><i>最近：</i>{new Date(error.createdAt).Format("yyyy-MM-dd hh:mm:ss")}</span></p>
                 })
               }
             </Card>
@@ -103,7 +103,7 @@ class JavascriptError extends Component {
                   jsErrorListByPage.map((error, index) => {
                     const msgArr = error.errorMessage.split(": ")
                     const len = msgArr.length
-                    return <p key={index} onClick={this.turnToDetail.bind(this, error)}><span className="status-icon"/><span>{msgArr[0] || "空"}</span><span>{msgArr[len - 1] || "..."}</span><span>({error.count}次)</span><Icon className="click-export" type="export" /><span><i>最近：</i>2018.11.11</span></p>
+                    return <p key={index} onClick={this.turnToDetail.bind(this, error)}><span className="status-icon"/><span>{msgArr[0] || "空"}</span><span>{msgArr[len - 1] || "..."}</span><span>({error.count}次)</span><Icon className="click-export" type="export" /><span><i>最近：</i>{new Date(error.createdAt).Format("yyyy-MM-dd hh:mm:ss")}</span></p>
                   })
                 }
               </Card>
