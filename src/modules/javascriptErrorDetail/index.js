@@ -11,18 +11,23 @@ class JavascriptErrorDetail extends Component {
     this.analysisError = this.analysisError.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { errorMsg } = Utils.parseQs()
-    this.props.getJavascriptErrorListByMsgAction({errorMsg: encodeURIComponent(errorMsg)}, (data) => {
+    let errorDetail = []
+    await this.props.getJavascriptErrorListByMsgAction({errorMsg: encodeURIComponent(errorMsg)}, (data) => {
       const { errorIndex } = this.props
       const errorList = data
-      const errorDetail = this.analysisError(errorList[errorIndex])
+      errorDetail = this.analysisError(errorList[errorIndex])
       this.getTheLocationOfError(errorDetail.jsPathArray)
       this.props.updateJavascriptErrorDetailState({errorList, errorDetail})
     })
+
+    this.props.getJavascriptErrorAboutInfoAction({errorMsg: encodeURIComponent(errorMsg), customerKey: errorDetail.customerKey}, (res) => {
+      this.props.updateJavascriptErrorDetailState({errorAboutInfo: res})
+    })
   }
   render() {
-    const { errorDetail, errorList, errorStackList } = this.props
+    const { errorDetail, errorList, errorStackList, errorAboutInfo } = this.props
     const columns = [
       { title: "错误信息", dataIndex: "errorMessage", key: "errorMessage"},
       { title: "页面", dataIndex: "simpleUrl", key: "simpleUrl" },
@@ -79,7 +84,7 @@ class JavascriptErrorDetail extends Component {
           </div>
           <div className="info-box">
             <span>影响用户</span>
-            <span>69</span>
+            <span>{errorAboutInfo.customerCount}</span>
           </div>
         </Col>
         <Col span={16} className="operation-container">
@@ -94,8 +99,8 @@ class JavascriptErrorDetail extends Component {
         <Col span={6}>
           { ipIcon }
           <div className="device-info-box">
-            <span>192.168.0.1</span>
-            <span>次数: 100</span>
+            <span><label className="customer-key">{errorDetail.customerKey || "..."}</label><Icon className="copy-key" type="copy" /></span>
+            <span>个体发生次数: {errorAboutInfo.occurCount}</span>
           </div>
         </Col>
         <Col span={6}>
@@ -173,6 +178,9 @@ class JavascriptErrorDetail extends Component {
     if (errorList.length >= errorIndex + 1) {
       const errorDetail = this.analysisError(errorList[errorIndex + 1])
       this.props.updateJavascriptErrorDetailState({errorDetail, errorIndex: errorIndex + 1})
+      this.props.getJavascriptErrorAboutInfoAction({errorMsg: encodeURIComponent(errorDetail.errorMessage), customerKey: errorDetail.customerKey}, (res) => {
+        this.props.updateJavascriptErrorDetailState({errorAboutInfo: res})
+      })
     }
   }
 
@@ -194,6 +202,7 @@ class JavascriptErrorDetail extends Component {
     const jsPathArray = error.errorStack.match(/\([(http)?:]?[\S]*\d+\)/g)
     const tempArr = jsPathArray ? jsPathArray[0].split("/") : []
     const titleDetail = tempArr.length ? tempArr[tempArr.length - 1] : ""
+    const customerKey = error.customerKey
 
     let browserArr = [], osVersionArr = []
     if (os === "web") {
@@ -252,7 +261,8 @@ class JavascriptErrorDetail extends Component {
       osVersion,
       deviceName,
       jsPathArray,
-      titleDetail
+      titleDetail,
+      customerKey
     }
   }
   getTheLocationOfError(tempJsPathArray) {

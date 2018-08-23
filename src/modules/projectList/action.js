@@ -5,16 +5,10 @@ export const updateProjectListState = createAction("updateProjectListState", pay
 
 export const clearProjectListState = createAction("clearProjectListState")
 
-export const loginAction = (handleResult) => () => {
-  return HttpUtil.get(HttpApi.getBankList).then(
-    response => {
-      if (response.data) {
-        handleResult(response.data)
-      } else {
-        console.log("未能成功获取支持银行卡列表")
-      }
-    }, () => {
-      console.log("未能成功获取支持银行卡列表")
-    }
-  )
+export const getProjectListAction = (handleResult) => () => {
+  return HttpUtil.get(HttpApi.projectList).then( response => {
+    handleResult(response.data)
+  }, () => {
+    console.log("未能成功获取支持银行卡列表")
+  })
 }

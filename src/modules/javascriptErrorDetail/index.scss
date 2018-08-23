@@ -121,6 +121,19 @@
             }
             span:first-child {
                 font-weight: bold;
+                height: 25px;
+                .customer-key {
+                    width: 80px;
+                    display: block;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    float: left;
+                }
+                .copy-key {
+                    font-size: 18px;
+                    color: #7a7979;
+                }
             }
         }
         .browser-icon {

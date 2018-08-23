@@ -125,6 +125,11 @@
                 text-overflow: ellipsis;
             }
         }
+        .url-box-active {
+            background: url("../../assets/img/javascriptErrorDetail/url-bg-active.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
     }
     .page-error-container {
         padding-top: 5px;

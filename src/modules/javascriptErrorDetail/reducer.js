@@ -2,6 +2,7 @@ import { handleActions } from "redux-actions"
 
 const initialState = {
   errorIndex: 0,
+  errorAboutInfo: {},
   errorDetail: {},
   errorList: [],
   errorStackList: []

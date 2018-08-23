@@ -11,7 +11,8 @@ const initialState = {
   iosPercent: "0%",
   androidPercent: "0%",
   activeKeyTop: "1",
-  activeKeyDown: "1"
+  activeKeyDown: "1",
+  project: null
 }
 
 export default handleActions({

@@ -21,3 +21,9 @@ export const getJavascriptErrorStackCodeAction = (param, handleResult) => () => 
     handleResult(response.data)
   })
 }
+
+export const getJavascriptErrorAboutInfoAction = (param, handleResult) => () => {
+  return HttpUtil.post(HttpApi.getJavascriptErrorAboutInfo, param).then( response => {
+    handleResult(response.data)
+  })
+}

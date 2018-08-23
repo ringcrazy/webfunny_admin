@@ -9,7 +9,8 @@ class JavascriptError extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      jsErrorCountByDayChart: null
+      jsErrorCountByDayChart: null,
+      activePageIndex: 0
     }
     this.initData = this.initData.bind(this)
     this.loadInitData = this.loadInitData.bind(this)
@@ -28,7 +29,9 @@ class JavascriptError extends Component {
             iosPercent, androidPercent, activeKeyTop,
             activeKeyDown } = this.props
     return <div className="javascriptError-container">
-      <Header/>
+      <Header
+        chooseProject={this.choseProject.bind(this)}
+      />
       <Row>
         <Card className="main-info-container">
           <Col span={16}>
@@ -83,10 +86,10 @@ class JavascriptError extends Component {
             <Col span={8} className="page-container">
               <Card style={{ width: "100%" }}>
                 {
-                  pageErrorList.map((page) => {
+                  pageErrorList.map((page, index) => {
                     const percent = page.count * 100 / maxPageErrorCount + "%"
                     return <Tooltip key={Math.random()} title={page.simpleUrl} placement="right">
-                        <p className="url-box" style={{ backgroundSize: percent + " 100%" }} onClick={this.getJsErrorListByPage.bind(this, page.simpleUrl)}>
+                        <p className={this.state.activePageIndex === index ? "url-box url-box-active" : "url-box"} style={{ backgroundSize: percent + " 100%" }} onClick={this.getJsErrorListByPage.bind(this, page.simpleUrl, index)}>
                           <span>{page.simpleUrl}</span><span>({page.count}次)</span>
                         </p>
                       </Tooltip>
@@ -149,10 +152,11 @@ class JavascriptError extends Component {
       })
     }
   }
-  getJsErrorListByPage(simpleUrl) {
+  getJsErrorListByPage(simpleUrl, index) {
     const { timeType } = this.props
     this.props.getJsErrorSortAction({simpleUrl, timeType}, (result) => {
       this.props.updateJavascriptErrorState({jsErrorListByPage: result.data})
+      this.setState({activePageIndex: index})
     })
   }
   turnToDetail(error) {
@@ -201,6 +205,10 @@ class JavascriptError extends Component {
     this.props.getJsErrorSortAction({ timeType }, (result) => {
       this.props.updateJavascriptErrorState({jsErrorList: result.data})
     })
+  }
+  choseProject() {
+    this.props.clearJavascriptErrorState()
+    this.initData()
   }
 }
 

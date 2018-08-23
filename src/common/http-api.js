@@ -8,6 +8,10 @@ const api = {
   "register": apiHost + "/api/v1/user",
   // 查询所有用户
   "userList": apiHost + "/api/v1/user/list",
+  // 查询所有项目列表
+  "projectList": apiHost + "/api/v1/project/list",
+
+
   // 根据时间查询每天JS的错误量
   "getJsErrorCountByDay": apiHost + "/api/v1/getJavascriptErrorInfoListByDay",
   // 根据时间查询一天内js错误总量和最近几小时的错误量
@@ -18,6 +22,8 @@ const api = {
   "getJavascriptErrorCountByOs": apiHost + "/api/v1/getJavascriptErrorCountByOs",
   // errorMsg 获取js错误列表
   "getJavascriptErrorListByMsg": apiHost + "/api/v1/getJavascriptErrorListByMsg",
+  // 获取js错误相关信息
+  "getJavascriptErrorAboutInfo": apiHost + "/api/v1/getJavascriptErrorAboutInfo",
   // 获取js错误详情
   "getJavascriptErrorDetail": id => apiHost + "/api/v1/javascriptErrorInfo/" + id,
   // 获取js错误对应的code
