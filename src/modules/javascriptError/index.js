@@ -17,7 +17,6 @@ class JavascriptError extends Component {
   }
 
   componentDidMount() {
-    this.initData()
   }
 
   componentWillUnmount() {
@@ -31,6 +30,7 @@ class JavascriptError extends Component {
     return <div className="javascriptError-container">
       <Header
         chooseProject={this.choseProject.bind(this)}
+        loadedProjects={this.loadedProjects.bind(this)}
       />
       <Row>
         <Card className="main-info-container">
@@ -220,6 +220,9 @@ class JavascriptError extends Component {
   }
   choseProject() {
     this.props.clearJavascriptErrorState()
+    this.initData()
+  }
+  loadedProjects() {
     this.initData()
   }
 }

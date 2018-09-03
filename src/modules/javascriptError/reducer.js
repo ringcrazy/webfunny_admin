@@ -12,7 +12,8 @@ const initialState = {
   androidPercent: "0%",
   activeKeyTop: "1",
   activeKeyDown: "1",
-  project: null
+  project: null,
+  simpleUrl: ""
 }
 
 export default handleActions({

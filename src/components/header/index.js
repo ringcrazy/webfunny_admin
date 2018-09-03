@@ -9,14 +9,26 @@ export default class Header extends Component {
     this.state = {
       projectList: [],
       chooseProject: {
+        webMonitorId: "",
         projectName: ""
       }
     }
   }
 
   componentDidMount() {
+    const chooseWebMonitorId = window.localStorage.chooseWebMonitorId
     HttpUtil.get(HttpApi.projectList).then( res => {
-      this.setState({projectList: res.data.rows, chooseProject: res.data.rows[0]})
+      const projectList = res.data.rows
+      let chooseProject = res.data.rows[0]
+      for (let i = 0; i < projectList.length; i ++) {
+        if (chooseWebMonitorId === projectList[i].webMonitorId) {
+          chooseProject = projectList[i]
+          break
+        }
+      }
+      this.setState({projectList: res.data.rows, chooseProject})
+      window.localStorage.chooseWebMonitorId = chooseProject.webMonitorId
+      if (typeof this.props.loadedProjects === "function") this.props.loadedProjects(chooseProject)
     }, () => {
       console.log("未能成功获取应用列表")
     })
@@ -81,6 +93,7 @@ export default class Header extends Component {
 
   choseProject(project) {
     this.setState({chooseProject: project})
+    window.localStorage.chooseWebMonitorId = project.webMonitorId
     this.props.chooseProject(project)
   }
 }
