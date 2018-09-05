@@ -60,9 +60,15 @@
           metaEl.setAttribute('name', 'viewport');
           doc.head.appendChild(metaEl);
         }
-        metaEl.setAttribute('content', 'width=device-width,user-scalable=no,initial-scale='+scale+',maximum-scale='+scale+',minimum-scale='+scale);
-        doc.documentElement.style.fontSize = _baseFontSize * dpr * _fontscale + 'px';
+        var uaString = ua.toLowerCase();
+        if(uaString.match(/(iphone|ipad|ipod)/gi) || uaString.match(/(android)/gi)) {
+          doc.documentElement.style.fontSize = '100px';
+        } else {
+          metaEl.setAttribute('content', 'width=device-width,user-scalable=no,initial-scale='+scale+',maximum-scale='+scale+',minimum-scale='+scale);
+          doc.documentElement.style.fontSize = _baseFontSize * dpr * _fontscale + 'px';
+        }
       };
+
       flex(100, 1);
     </script>
 </head>

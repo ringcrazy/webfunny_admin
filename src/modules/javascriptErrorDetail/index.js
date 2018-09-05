@@ -32,6 +32,9 @@ class JavascriptErrorDetail extends Component {
       { title: "错误信息", dataIndex: "errorMessage", key: "errorMessage"},
       { title: "页面", dataIndex: "simpleUrl", key: "simpleUrl" },
       { title: "设备", dataIndex: "deviceName", key: "deviceName" },
+      { title: "客户IP地址", dataIndex: "monitorIp", key: "monitorIp" },
+      { title: "省份", dataIndex: "province", key: "province" },
+      { title: "城市", dataIndex: "city", key: "city" },
       { title: "浏览器信息", dataIndex: "browserInfo", key: "browserInfo" },
       { title: <label>发生时间  <Icon type="arrow-down" /></label>, width: 200, dataIndex: "happenTime", key: "happenTime", fixed: "right"},
       {
@@ -99,8 +102,8 @@ class JavascriptErrorDetail extends Component {
         <Col span={6}>
           { ipIcon }
           <div className="device-info-box">
-            <span><label className="customer-key">{errorDetail.customerKey || "..."}</label><Icon className="copy-key" type="copy" /></span>
-            <span>个体发生次数: {errorAboutInfo.occurCount}</span>
+            <span><label className="customer-key">{errorDetail.monitorIp || "..."}</label></span>
+            <span>发生{errorAboutInfo.occurCount || 0}次 </span>
           </div>
         </Col>
         <Col span={6}>
@@ -160,7 +163,7 @@ class JavascriptErrorDetail extends Component {
         </Collapse>
       </Row>
       <Row className="table-container">
-        <Table columns= {columns} dataSource={data} scroll={{ x: 2300 }} />
+        <Table columns= {columns} dataSource={data} scroll={{ x: 2800 }} />
       </Row>
     </div>
   }
@@ -203,6 +206,8 @@ class JavascriptErrorDetail extends Component {
     const tempArr = jsPathArray ? jsPathArray[0].split("/") : []
     const titleDetail = tempArr.length ? tempArr[tempArr.length - 1] : ""
     const customerKey = error.customerKey
+    const province = error.province
+    const city = error.city
 
     let browserArr = [], osVersionArr = []
     if (os === "web") {
@@ -262,7 +267,9 @@ class JavascriptErrorDetail extends Component {
       deviceName,
       jsPathArray,
       titleDetail,
-      customerKey
+      customerKey,
+      province,
+      city
     }
   }
   getTheLocationOfError(tempJsPathArray) {

@@ -46,13 +46,13 @@ class JavascriptError extends Component {
           </Col>
           <Col span={8}>
             <Tabs defaultActiveKey="1" >
-              <TabPane tab={<span><Icon type="file-text" />信息概览</span>} key="1">
+              <TabPane tab={<span><Icon type="file-text" />错误率统计</span>} key="1">
                 <div className="info-box">
-                  <span><Icon type="exception" /><label>错误率</label></span>
+                  <span><Icon type="exception" /><label>总错误率</label></span>
                   <span>{totalPercent}%</span>
                 </div>
                 <div className="info-box">
-                  <span><Icon type="ie" /><label>PC</label></span>
+                  <span><Icon type="windows" /><label>PC</label></span>
                   <span>{pcPercent}%</span>
                 </div>
                 <div className="info-box">
@@ -79,8 +79,22 @@ class JavascriptError extends Component {
                   const len = msgArr.length
                   return <p key={index} onClick={this.turnToDetail.bind(this, error)} title="点击查看详情" >
                     <span className="status-icon"/><span>{msgArr[0] || "空"}</span>
-                    <span>{msgArr[len - 1] || "..."}</span><span>({error.count}次)</span>
-                    <Icon className="click-export" type="export" />
+                    <span>{msgArr[len - 1] || "..."}</span>
+                    {
+                      error.osInfo.map((obj) => {
+                        let osType = ""
+                        if (obj.os === "ios") {
+                          osType = "apple"
+                        } else if (obj.os === "and") {
+                          osType = "android"
+                        } else {
+                          osType = "windows"
+                        }
+                        return <span>
+                          <Icon className="click-export" type={osType} /><label>（{obj.count}次）</label>
+                        </span>
+                      })
+                    }
                     <span className="right-icon"><Icon type="right" /></span>
                     <span ><i>最近：</i>{new Date(error.createdAt).Format("yyyy-MM-dd hh:mm:ss")}</span>
                   </p>
@@ -111,8 +125,22 @@ class JavascriptError extends Component {
                     const len = msgArr.length
                     return <p key={index} onClick={this.turnToDetail.bind(this, error)} title="点击查看详情" >
                       <span className="status-icon"/><span>{msgArr[0] || "空"}</span>
-                      <span>{msgArr[len - 1] || "..."}</span><span>({error.count}次)</span>
-                      <Icon className="click-export" type="export" />
+                      <span>{msgArr[len - 1] || "..."}</span>
+                      {
+                        error.osInfo.map((obj) => {
+                          let osType = ""
+                          if (obj.os === "ios") {
+                            osType = "apple"
+                          } else if (obj.os === "and") {
+                            osType = "android"
+                          } else {
+                            osType = "windows"
+                          }
+                          return <span>
+                          <Icon className="click-export" type={osType} /><label>（{obj.count}次）</label>
+                        </span>
+                        })
+                      }
                       <span className="right-icon"><Icon type="right" /></span>
                       <span ><i>最近：</i>{new Date(error.createdAt).Format("yyyy-MM-dd hh:mm:ss")}</span>
                     </p>

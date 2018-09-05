@@ -78,12 +78,12 @@ export default class Header extends Component {
           </Dropdown>
         </div>
         <Dropdown overlay={gitMenu} placement="bottomRight">
-          <a className="github-box">
+          <a className="github-box" target="_blank" href="https://github.com/a597873885/webfunny_admin.git">
             <Icon type="github" />
           </a>
         </Dropdown>
         <Dropdown overlay={blogMenu} placement="bottomRight">
-          <a className="bokeyuan-box">
+          <a className="bokeyuan-box" target="_blank" href="https://www.cnblogs.com/warm-stranger/p/9417084.html">
             <img className="browser-icon" src={require("Images/common/bokeyuan.png")}/>
           </a>
         </Dropdown>
