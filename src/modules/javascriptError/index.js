@@ -77,6 +77,9 @@ class JavascriptError extends Component {
                 jsErrorList.map((error, index) => {
                   const msgArr = error.errorMessage.split(": ")
                   const len = msgArr.length
+                  const nowTime = new Date().getTime()
+                  const latestTime = new Date(error.createdAt).getTime()
+                  const timeStatus = (nowTime - latestTime) > 24 * 60 * 60 * 1000
                   return <p key={index} onClick={this.turnToDetail.bind(this, error)} title="点击查看详情" >
                     <span className="status-icon"/><span>{msgArr[0] || "空"}</span>
                     <span>{msgArr[len - 1] || "..."}</span>
@@ -90,13 +93,13 @@ class JavascriptError extends Component {
                         } else {
                           osType = "windows"
                         }
-                        return <span>
+                        return <span key={Math.random()}>
                           <Icon className="click-export" type={osType} /><label>（{obj.count}次）</label>
                         </span>
                       })
                     }
                     <span className="right-icon"><Icon type="right" /></span>
-                    <span ><i>最近：</i>{new Date(error.createdAt).Format("yyyy-MM-dd hh:mm:ss")}</span>
+                    <span className={timeStatus ? "not-today" : ""}><i>{timeStatus ? "最近：" : "今天："}</i>{new Date(latestTime).Format("yyyy-MM-dd hh:mm:ss")}</span>
                   </p>
                 })
               }
