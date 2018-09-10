@@ -30,6 +30,10 @@ const api = {
   "getJavascriptErrorStackCode": apiHost + "/api/v1/getJavascriptErrorStackCode",
   // 根据页面每天JS的错误量
   "getJavascriptErrorListByPage": apiHost + "/api/v1/getJavascriptErrorListByPage",
+  // 设置需要忽略的js错误
+  "setIgnoreJavascriptError": apiHost + "/api/v1/ignoreError",
+  // 获取忽略的js错误列表
+  "ignoreErrorByApplication": apiHost + "/api/v1/ignoreErrorByApplication",
 
 }
 

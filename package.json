@@ -70,6 +70,7 @@
     "babel-plugin-import": "^1.8.0",
     "echarts": "^4.1.0",
     "fastclick": "^1.0.6",
+    "fundebug-javascript": "^1.2.2",
     "history": "^4.6.3",
     "iscroll": "^5.2.0",
     "moment": "^2.18.1",

@@ -1,6 +1,6 @@
 import "./index.scss"
 import React, { Component } from "react"
-import { Row, Col, Button, Icon, Table, Collapse, Timeline } from "antd"
+import { Row, Col, Button, Icon, Table, Collapse, Timeline, Modal } from "antd"
 import Header from "Components/header"
 import Utils from "Common/utils"
 const Panel = Collapse.Panel
@@ -25,9 +25,16 @@ class JavascriptErrorDetail extends Component {
     this.props.getJavascriptErrorAboutInfoAction({errorMsg: encodeURIComponent(errorMsg), customerKey: errorDetail.customerKey}, (res) => {
       this.props.updateJavascriptErrorDetailState({errorAboutInfo: res})
     })
+
+    this.props.getIgnoreJavascriptErrorListAction((res) => {
+      const result = res.filter(data => data.ignoreErrorMessage === errorMsg)
+      if (result.length > 0) {
+        this.props.updateJavascriptErrorDetailState({isIgnore: true})
+      }
+    })
   }
   render() {
-    const { errorDetail, errorList, errorStackList, errorAboutInfo } = this.props
+    const { errorDetail, errorList, errorStackList, errorAboutInfo, isIgnore } = this.props
     const columns = [
       { title: "错误信息", dataIndex: "errorMessage", key: "errorMessage"},
       { title: "页面", dataIndex: "simpleUrl", key: "simpleUrl" },
@@ -92,8 +99,8 @@ class JavascriptErrorDetail extends Component {
         </Col>
         <Col span={16} className="operation-container">
           <Button disabled>已解决<Icon type="check-circle-o" /></Button>
-          <Button disabled>忽略<Icon type="minus-circle-o" /></Button>
-          <Button disabled>删除<Icon type="delete" /></Button>
+          <Button disabled={isIgnore} onClick={this.ignoreError.bind(this, errorDetail.errorMessage)}>{isIgnore === false ? "忽略" : "已忽略"}<Icon type={isIgnore === false ? "minus-circle-o" : "check-circle-o"} /></Button>
+          <Button onClick={this.deleteError.bind(this)}>删除<Icon type="delete" /></Button>
           <Button onClick={this.turnToPrev.bind(this)}>上一个<Icon type="step-backward" /></Button>
           <Button onClick={this.turnToNext.bind(this)}>下一个<Icon type="step-forward" /></Button>
         </Col>
@@ -169,6 +176,25 @@ class JavascriptErrorDetail extends Component {
   }
   callback(key) {
     console.log(key)
+  }
+  ignoreError() {
+    const { errorMsg } = Utils.parseQs()
+    Modal.confirm({
+      title: "提示",
+      content: "此操作将会忽略所有该类型的报错，以后也不会再继续上传了，是否忽略？",
+      okText: "确定忽略",
+      cancelText: "取消",
+      iconType: "warning",
+      onOk: () => {
+        this.props.setIgnoreJavascriptErrorAction({ignoreErrorMessage: errorMsg}, () => {
+          this.props.updateJavascriptErrorDetailState({isIgnore: true})
+        })
+      }
+    })
+    a = b + c
+  }
+  deleteError() {
+
   }
   turnToPrev() {
     const { errorList, errorIndex } = this.props

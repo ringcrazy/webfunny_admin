@@ -52,15 +52,15 @@ class JavascriptError extends Component {
                   <span>{totalPercent}%</span>
                 </div>
                 <div className="info-box">
-                  <span><Icon type="windows" /><label>PC</label></span>
+                  <span><Icon type="windows" /><label>PC错误率</label></span>
                   <span>{pcPercent}%</span>
                 </div>
                 <div className="info-box">
-                  <span><Icon type="apple" /><label>IOS</label></span>
+                  <span><Icon type="apple" /><label>IOS错误率</label></span>
                   <span>{iosPercent}%</span>
                 </div>
                 <div className="info-box">
-                  <span><Icon type="android" /><label>Android</label></span>
+                  <span><Icon type="android" /><label>Android错误率</label></span>
                   <span>{androidPercent}%</span>
                 </div>
               </TabPane>
@@ -79,7 +79,7 @@ class JavascriptError extends Component {
                   const len = msgArr.length
                   const nowTime = new Date().getTime()
                   const latestTime = new Date(error.createdAt).getTime()
-                  const timeStatus = (nowTime - latestTime) > 24 * 60 * 60 * 1000
+                  const timeStatus = nowTime - latestTime > 24 * 60 * 60 * 1000
                   return <p key={index} onClick={this.turnToDetail.bind(this, error)} title="点击查看详情" >
                     <span className="status-icon"/><span>{msgArr[0] || "空"}</span>
                     <span>{msgArr[len - 1] || "..."}</span>

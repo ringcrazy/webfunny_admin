@@ -27,3 +27,15 @@ export const getJavascriptErrorAboutInfoAction = (param, handleResult) => () => 
     handleResult(response.data)
   })
 }
+
+export const setIgnoreJavascriptErrorAction = (param, handleResult) => () => {
+  return HttpUtil.post(HttpApi.setIgnoreJavascriptError, param).then( response => {
+    handleResult(response.data)
+  })
+}
+
+export const getIgnoreJavascriptErrorListAction = (handleResult) => () => {
+  return HttpUtil.get(HttpApi.ignoreErrorByApplication).then( response => {
+    handleResult(response.data)
+  })
+}

@@ -5,7 +5,8 @@ const initialState = {
   errorAboutInfo: {},
   errorDetail: {},
   errorList: [],
-  errorStackList: []
+  errorStackList: [],
+  isIgnore: false
 }
 
 export default handleActions({

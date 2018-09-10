@@ -13,9 +13,7 @@ export default class ProjectList extends Component {
   render() {
     return <div className="projectList-container">
       <Header/>
-      <div className="">
-
-      </div>
+      <div className="" />
     </div>
   }
 }
