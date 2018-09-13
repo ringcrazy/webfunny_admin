@@ -13,6 +13,7 @@ export default class Header extends Component {
         projectName: ""
       }
     }
+    this.choseProject = this.choseProject.bind(this)
   }
 
   componentDidMount() {

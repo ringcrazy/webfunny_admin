@@ -23,7 +23,7 @@ class JavascriptError extends Component {
     this.props.clearJavascriptErrorState()
   }
   render() {
-    const { jsErrorList, jsErrorListByPage, pageErrorList,
+    const { jsErrorList, ignoreErrorList, jsErrorListByPage, pageErrorList,
             maxPageErrorCount, totalPercent, pcPercent,
             iosPercent, androidPercent, activeKeyTop,
             activeKeyDown } = this.props
@@ -46,7 +46,7 @@ class JavascriptError extends Component {
           </Col>
           <Col span={8}>
             <Tabs defaultActiveKey="1" >
-              <TabPane tab={<span><Icon type="file-text" />错误率统计</span>} key="1">
+              <TabPane tab={<span><Icon type="file-text" />7天错误率统计</span>} key="1">
                 <div className="info-box">
                   <span><Icon type="exception" /><label>总错误率</label></span>
                   <span>{totalPercent}%</span>
@@ -74,14 +74,19 @@ class JavascriptError extends Component {
           <TabPane tab={<span><Icon type="tags-o" />错误列表</span>} key="1">
             <Card className="error-list-container">
               {
-                jsErrorList.map((error, index) => {
+                jsErrorList.length <= 0 && <span className="loading-box"><Icon className="loading-icon" type="loading" /></span>
+              }
+              {
+                  jsErrorList.map((error, index) => {
+                  const ignoreStatus = ignoreErrorList.filter(data => data.ignoreErrorMessage === error.errorMessage && data.type === "ignore").length > 0
+                  const resolveStatus = ignoreErrorList.filter(data => data.ignoreErrorMessage === error.errorMessage && data.type === "resolve").length > 0
                   const msgArr = error.errorMessage.split(": ")
                   const len = msgArr.length
                   const nowTime = new Date().getTime()
-                  const latestTime = new Date(error.createdAt).getTime()
+                  const latestTime = parseInt(error.happenTime, 10)
                   const timeStatus = nowTime - latestTime > 24 * 60 * 60 * 1000
                   return <p key={index} onClick={this.turnToDetail.bind(this, error)} title="点击查看详情" >
-                    <span className="status-icon"/><span>{msgArr[0] || "空"}</span>
+                    <span className={ignoreStatus && " status-icon status-icon-ignore " ||  resolveStatus && " status-icon status-icon-resolve " || "status-icon"}/><span>{msgArr[0] || "空"}</span>
                     <span>{msgArr[len - 1] || "..."}</span>
                     {
                       error.osInfo.map((obj) => {
@@ -98,8 +103,12 @@ class JavascriptError extends Component {
                         </span>
                       })
                     }
+                    {
+                      ignoreStatus && <label className="ignore-state">已忽略</label> ||
+                      resolveStatus && <label className="resolve-state">已解决</label>
+                    }
                     <span className="right-icon"><Icon type="right" /></span>
-                    <span className={timeStatus ? "not-today" : ""}><i>{timeStatus ? "最近：" : "今天："}</i>{new Date(latestTime).Format("yyyy-MM-dd hh:mm:ss")}</span>
+                    <span className={timeStatus ? "not-today" : ""} title="发生时间以用户的手机为准，不完全准确"><i>{timeStatus ? "最近：" : "今天："}</i>{new Date(latestTime).Format("yyyy-MM-dd hh:mm:ss")}</span>
                   </p>
                 })
               }
@@ -145,7 +154,7 @@ class JavascriptError extends Component {
                         })
                       }
                       <span className="right-icon"><Icon type="right" /></span>
-                      <span ><i>最近：</i>{new Date(error.createdAt).Format("yyyy-MM-dd hh:mm:ss")}</span>
+                      <span ><i>最近：</i>{new Date(parseInt(error.happenTime, 10)).Format("yyyy-MM-dd hh:mm:ss")}</span>
                     </p>
                   })
                 }
@@ -230,7 +239,7 @@ class JavascriptError extends Component {
   }
 
   // 加载错误图表数据
-  loadInitData(newTimeType) {
+  async loadInitData(newTimeType) {
     const timeType = newTimeType ? newTimeType : this.props.timeType
     // 基于准备好的dom，初始化echarts实例
     this.state.jsErrorCountByDayChart = echarts.init(document.getElementById("jsErrorCountByDay"))
@@ -244,8 +253,12 @@ class JavascriptError extends Component {
       }
       this.state.jsErrorCountByDayChart.setOption(jsErrorOption([dateArray, jsErrorArray]))
     })
+    // 获取忽略js错误列表
+    await this.props.getIgnoreJavascriptErrorListAction((result) => {
+      this.props.updateJavascriptErrorState({ignoreErrorList: result})
+    })
     // 获取js错误列表
-    this.props.getJsErrorSortAction({ timeType }, (result) => {
+    await this.props.getJsErrorSortAction({ timeType }, (result) => {
       this.props.updateJavascriptErrorState({jsErrorList: result.data})
     })
   }

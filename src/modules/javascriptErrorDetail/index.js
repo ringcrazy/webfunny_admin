@@ -33,6 +33,9 @@ class JavascriptErrorDetail extends Component {
       }
     })
   }
+  componentWillUnmount() {
+    this.props.clearJavascriptErrorDetailState()
+  }
   render() {
     const { errorDetail, errorList, errorStackList, errorAboutInfo, isIgnore } = this.props
     const columns = [
@@ -98,7 +101,7 @@ class JavascriptErrorDetail extends Component {
           </div>
         </Col>
         <Col span={16} className="operation-container">
-          <Button disabled>已解决<Icon type="check-circle-o" /></Button>
+          <Button disabled={isIgnore} onClick={this.resolveError.bind(this, errorDetail.errorMessage)}>解决<Icon type="check-circle-o" /></Button>
           <Button disabled={isIgnore} onClick={this.ignoreError.bind(this, errorDetail.errorMessage)}>{isIgnore === false ? "忽略" : "已忽略"}<Icon type={isIgnore === false ? "minus-circle-o" : "check-circle-o"} /></Button>
           <Button onClick={this.deleteError.bind(this)}>删除<Icon type="delete" /></Button>
           <Button onClick={this.turnToPrev.bind(this)}>上一个<Icon type="step-backward" /></Button>
@@ -177,6 +180,21 @@ class JavascriptErrorDetail extends Component {
   callback(key) {
     console.log(key)
   }
+  resolveError() {
+    const { errorMsg } = Utils.parseQs()
+    Modal.confirm({
+      title: "提示",
+      content: "是否已经修复了这个问题？",
+      okText: "是",
+      cancelText: "否",
+      iconType: "warning",
+      onOk: () => {
+        this.props.setIgnoreJavascriptErrorAction({ignoreErrorMessage: errorMsg, type: "resolve"}, () => {
+          this.props.updateJavascriptErrorDetailState({isIgnore: true})
+        })
+      }
+    })
+  }
   ignoreError() {
     const { errorMsg } = Utils.parseQs()
     Modal.confirm({
@@ -186,15 +204,21 @@ class JavascriptErrorDetail extends Component {
       cancelText: "取消",
       iconType: "warning",
       onOk: () => {
-        this.props.setIgnoreJavascriptErrorAction({ignoreErrorMessage: errorMsg}, () => {
+        this.props.setIgnoreJavascriptErrorAction({ignoreErrorMessage: errorMsg, type: "ignore"}, () => {
           this.props.updateJavascriptErrorDetailState({isIgnore: true})
         })
       }
     })
-    a = b + c
   }
   deleteError() {
-
+    Modal.confirm({
+      title: "提示",
+      content: "抱歉，删除功能暂时不对线上开放！",
+      okText: "确定",
+      cancelText: "取消",
+      iconType: "warning",
+      onOk: () => {}
+    })
   }
   turnToPrev() {
     const { errorList, errorIndex } = this.props
