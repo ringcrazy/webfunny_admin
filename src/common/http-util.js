@@ -1,7 +1,7 @@
 import Utils from "Common/utils"
 import "whatwg-fetch"
 import "./extension"
-const timeout = 10000
+const timeout = 30000
 export default class HttpUtil {
   /**
    * get 请求

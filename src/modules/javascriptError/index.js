@@ -17,6 +17,11 @@ class JavascriptError extends Component {
   }
 
   componentDidMount() {
+    // try {
+    //   throw new Error("获取通讯录失败")
+    // } catch (e) {
+    //   console.error(e)
+    // }
   }
 
   componentWillUnmount() {
@@ -46,7 +51,7 @@ class JavascriptError extends Component {
           </Col>
           <Col span={8}>
             <Tabs defaultActiveKey="1" >
-              <TabPane tab={<span><Icon type="file-text" />7天错误率统计</span>} key="1">
+              <TabPane tab={<span><Icon type="file-text" />一周统计</span>} key="1">
                 <div className="info-box">
                   <span><Icon type="exception" /><label>总错误率</label></span>
                   <span>{totalPercent}%</span>
@@ -108,7 +113,7 @@ class JavascriptError extends Component {
                       resolveStatus && <label className="resolve-state">已解决</label>
                     }
                     <span className="right-icon"><Icon type="right" /></span>
-                    <span className={timeStatus ? "not-today" : ""} title="发生时间以用户的手机为准，不完全准确"><i>{timeStatus ? "最近：" : "今天："}</i>{new Date(latestTime).Format("yyyy-MM-dd hh:mm:ss")}</span>
+                    <span className={timeStatus ? "not-today" : ""} title="发生时间以用户的手机为准，不完全准确"><i>{timeStatus ? "最近：" : "24小时内："}</i>{new Date(latestTime).Format("yyyy-MM-dd hh:mm:ss")}</span>
                   </p>
                 })
               }
@@ -219,7 +224,7 @@ class JavascriptError extends Component {
     this.loadInitData()
 
     // 根据平台获取并计算错误率
-    this.props.getJavascriptErrorCountByOsAction((result) => {
+    this.props.getJavascriptErrorCountByOsAction({day: 7}, (result) => {
       const pcError = parseInt(result.pcError.count, 10)
       const iosError = parseInt(result.iosError.count, 10)
       const androidError = parseInt(result.androidError.count, 10)

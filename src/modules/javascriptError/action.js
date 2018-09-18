@@ -27,8 +27,8 @@ export const getJsErrorSortAction = (param, handleResult) => () => {
   })
 }
 
-export const getJavascriptErrorCountByOsAction = (handleResult) => () => {
-  return HttpUtil.get(HttpApi.getJavascriptErrorCountByOs).then( response => {
+export const getJavascriptErrorCountByOsAction = (param, handleResult) => () => {
+  return HttpUtil.get(HttpApi.getJavascriptErrorCountByOs, param).then( response => {
     handleResult(response.data)
   })
 }
